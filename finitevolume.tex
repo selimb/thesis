@@ -33,7 +33,7 @@ Again,~\Cref{eq:fvtransport} is to be solved over all CVs. Within each CV lies a
 %
 The integral transport equation in~\Cref{eq:fvtransport} remains analytical; no numerical approximations have been made thus far. To enable computer implementation, the equation must be discretized, so as to yield a finite set of algebraic equations in the form of:
 \begin{equation*}
-    a_P \phi_P + \sum_{nb}a_{nb}\phi_{nb} = b_p,
+    a_P \phi_P + \sum_{nb}a_{nb}\phi_{nb} = b_P,
 \end{equation*}
 where $P$ is the control volume of interest, $a$'s and $b$'s are constant coefficients, and $nb$ represents the neighboring field points involved in the discretization. One speaks of a \textit{stencil} when referring to these neighbors. Discretization inevitably introduces discretization errors, which is why it is always an approximation. The goal is to reduce these errors to a negligible level.
 
@@ -46,7 +46,7 @@ Discretization of the finite volume equations can be split in two steps:
 \subsubsection{Spatial discretization}
 Every term in~\Cref{eq:fvtransport} is an integral. To calculate either the volume or surface integrals exactly would require knowledge of the integrand everywhere on the volume or surface; however such information is not available. Discretization of the integrals in~\Cref{eq:fvtransport} can be done using three levels of approximation: integration, interpolation and differentiation.
 
-Let $\vec{F}$ be a flux vector, the closed surface integrals for an arbitrary polyhedron, which is the only type of three-dimensional control volume that is used in most finite volume codes, can be written as:
+Let $\vec{F}$ be a flux vector, the closed surface integrals for an arbitrary polyhedron, which is the only type of three-dimensional control volume that is used in most finite volume codes, then the integral of the normal flux over the control surface can be written as:
 \begin{equation}
     \int_{\surf} (\vec{F}\cdot \vec{n})~dS = \sum_{k=1}^{N_f} \int_{S_k} (\vec{F}\cdot\vec{n}_k)~dS
     \label{eq:surfint},
@@ -66,7 +66,7 @@ The volume integral can also be numerically integrated using the midpoint rule. 
 \begin{equation*}
     \int_\vol G~d\vol = G_{P} V + \order(\delta^2),
 \end{equation*}
-where $V$ is the volume and $G_{P}$ is $G$ at the field point $P$. This method is of second-order accuracy provided that P lies at the CV centroid.
+where $V$ is the volume and $G_{P}$ is $G$ at the field point $P$. This method is of second-order accuracy provided that $P$ lies at the CV centroid.
 
 Application of the integral approximations to~\Cref{eq:fvtransport}, ignoring the $\order$ terms, results in:
 \begin{equation}

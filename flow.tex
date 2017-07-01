@@ -28,7 +28,7 @@ The conservation laws impose conditions on the rate of change of mass, momentum 
          + S_E
      \label{eq:energy},
 \end{align}
-where $\rho$ is the density, $\vec{u}$ the velocity vector, $\tau$ is the viscous stress tensor, $p$ is the fluid pressure, $\otimes$ is the outer product operator, $E$ is the specific energy of a fluid, $H$ is the specific total enthalpy, $T$ is the temperature and $k$ is the thermal conductivity coefficient. Readers ar er referred to~\cite{munson2012fundamentals} for a thorough derivation of these equations.
+where $\rho$ is the density, $\vec{u}$ the velocity vector, $\tau$ is the viscous stress tensor, $p$ is the fluid pressure, $\otimes$ is the outer product operator, $E$ is the specific energy of a fluid, $H$ is the specific total enthalpy, $T$ is the temperature and $k$ is the thermal conductivity coefficient. Readers are referred to~\cite{munson2012fundamentals} for a thorough derivation of these equations.
 
 Assuming the fluid is Newtonian, the stress tensor $\tau$ can be written as:
 \begin{equation*}
@@ -45,12 +45,17 @@ where $mu$ is the dynamic viscosity, a material property, and the strain-rate te
         \pdiff{u_i}{x_j} + \pdiff{u_j}{x_i}
     \right).
 \end{equation*}
+The specific energy is defined as:
+\begin{equation*}
+    E = i + \frac{1}{2}(u^2 + v^2 + w^2),
+\end{equation*}
+where $i$ is the internal thermal energy.
 The specific total enthalpy and specific energy are related by the following:
 \begin{equation*}
     H = E + \frac{p}{\rho}.
 \end{equation*}
 
-Put together, \Cref{eq:mass,eq:mom,eq:energy} form an under-determined system of five equations with seven unknowns: density, three components of velocity, pressure, temperature and specific energy. Equations of state are necessary to close the system. If the fluid is assumed to be a perfect gas, which is the case in most aerodynamic problems and all problems in this work, the following equations can be used:
+\Cref{eq:mass,eq:mom,eq:energy} form an under-determined system of five equations with seven unknowns: density, three components of velocity, pressure, temperature and specific energy. Equations of state are necessary to close the system. If the fluid is assumed to be a perfect gas, which is the case in most aerodynamic problems and all problems in this work, the following equations can be used:
 \begin{align}
     p &= \rho R T \label{eq:state1}\\
     i &= c_v T \label{eq:state2},
@@ -200,7 +205,7 @@ Finally, any problem definition in CFD requires specification of conditions at b
 \section{Turbulence modelling}
 \label{sec:turb}
 %
-\Cref{sec:ns} introduced the governing equations of the time-dependent three-dimensional fluid flow of a compressible Newtonian fluid. In theory, this set of equations can be solved numerically, provided initial and boundary conditions. This is what is called Direct Numerical Simulation (DNS). DNS for turbulent flows requires that all turbulent effects, which occur at very small temporal and spatial scales, be resolved. Consequently, DNS demands an equally small mesh spacing as well as a small time step size. The smaller the mesh spacing and time step, the more costly the computation is, making DNS near impossible even on modern supercomputers.
+\Cref{sec:ns} introduced the governing equations of the time-dependent three-dimensional fluid flow of a compressible Newtonian fluid. In theory, this set of equations can be solved numerically, provided initial and boundary conditions. This is what is called Direct Numerical Simulation (DNS). DNS for turbulent flows requires that all turbulent effects, which occur at very small temporal and spatial scales, be resolved. Consequently, DNS demands an equally small mesh spacing as well as a small time step size. The smaller the mesh spacing and time step, the more costly the computation, making DNS near impossible even on modern supercomputers.
 %
 \subsection{Random nature of turbulence}
 %
@@ -208,7 +213,7 @@ The Reynolds number $\Rey$ is a dimensionless quantity commonly used to characte
 \begin{equation*}
     \Rey = \frac{\rho U l}{\mu},
 \end{equation*}
-where $l$ is a characteristic length and $U$ is the velocity. The Reynolds number is a measure of the ratio of inertial forces to viscous forces. At low Reynolds numbers, fluid particles may follow relatively straight lines and minimal mixing occurs. For instance, a flow composed of a heterogeneous mixture may remain heterogeneous. This flow regime is referred to as laminar flow.
+where $l$ is a characteristic length and $U$ the velocity. The Reynolds number is a measure of the ratio of inertial forces to viscous forces. At low Reynolds numbers, fluid particles may follow relatively straight lines and minimal mixing occurs. For instance, a flow composed of a heterogeneous mixture may remain heterogeneous. This flow regime is referred to as laminar flow.
 
 On the other hand, flow at high Reynolds numbers is rather chaotic and random. Fluid particles no longer follow straight lines and mixing is significantly increased. A heterogeneous mixture will quickly become homogeneous if it can. Flow properties such as velocity vary randomly in time and space, even if boundary conditions are constant. This regime is called turbulent flow. It also happens that many flows in engineering are turbulent~\cite{versteeg2007introduction}, as are all cases mentioned in the present work.
 
@@ -248,7 +253,7 @@ It is important to note that $\ravg{\phi'} = 0$ but $\ravg{\phi''} \ne 0$.
 
 In order to obtain a set of mean governing equations, a Reynolds decomposition for pressure and density and a Favre decomposition for velocity, internal energy and temperature is taken and substituted into the original (instantaneous) equation. Next, a time average of the resulting equations is taken.
 
-It should be noted that the simpler Reynolds-averaged Navier-Stokes equations also exist but assume incompressible flow. Since the Favre-averaged equations are more general in that they do not rely on this assumption, only those are shown here.
+It should be noted that the simpler Reynolds-averaged Navier-Stokes equations also exist but assume incompressible flow. Since the Favre-averaged equations are more general in that they do not rely on this assumption, as shown below.
 %
 \subsubsection{Conservation of mass}
 %

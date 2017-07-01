@@ -13,7 +13,7 @@ The brute force approach is straight-forward and consists of looping through eve
     \label{fig:nasawalldist}
 \end{figure}
 
-The other approach, solving an additional PDE, may seem like a lot of extra work. However, CFD codes already provide functions and data structures required in solving such equations. There exists many different equations for approximating the wall distance, which are detailed and compared in~\cite{tucker2005computations,tucker2011hybrid,belyaev2015variational}. The technique used in syn3D and NX Flow consists in solving a Poisson equation followed by a normalization, which can mathematically be written as:
+The other approach, solving an additional PDE, may seem like a lot of extra work. However, CFD codes already provide functions and data structures required in solving such equations. There exists many different equations for approximating the wall distance, which are detailed and compared in~\cite{tucker2005computations,tucker2011hybrid,belyaev2015variational}. The technique used in syn3D and NX Flow consists of solving a Poisson equation followed by a normalization, which can mathematically be written as:
 \begin{align}
     \begin{split}
     \nabla^2\phi &= -1\\

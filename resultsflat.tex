@@ -15,6 +15,7 @@ The skin friction coefficient $C_f$ at $x = 0.97$ and drag coefficient $C_D$ are
     C_D = \frac{2D}{\rho_\infty U_\infty^2 A},
 \end{align*}
 where $D$ is the drag force and $A$ the reference area. For this case, the reference area is the length of the plate times its width, i.e. the length of the mesh in the $z$ direction. \Cref{tab:flat} tabulates the skin friction coefficient and drag coefficient values.
+All values are within 2\% of each other. Reasons for discrepancies are given below.
 \begin{table}
 \centering
 \caption{Flat Plate (syn3D \& NX Flow): Comparison of force coefficients on the finest grid.}
@@ -30,6 +31,22 @@ where $D$ is the drag force and $A$ the reference area. For this case, the refer
 \end{tabular}
 \end{table}
 \Cref{fig:synflatcnvstudy} shows the residual convergence of the density residual and turbulence residual for all grids with syn3D. \Cref{fig:nxflatcnvstudy} shows the residual of all equations for all grids with NX Flow. As expected, the coarser grids show faster convergence than the finer ones -- this phenomenon is detailed in~\cite{blazek2015computational}. While the residual was never driven down to machine precision, differences in the obtained solution field were found to be marginal by further reducing the residual.
+
+\Cref{tab:flatcpu} compares the number of iterations and CPU time between syn3D and NX Flow for the medium grid, which demonstrates the advantages of an implicit solver over an explicit solver: around two thousand times more iterations are taken by syn3D. On the other hand, explicit iterations are much less computationally expensive and require less storage. It should also be noted that NX Flow does not solve the conservation of energy equation for this particular case, since it uses a fixed density. Moreover, multigrid was not used with syn3D for this case, which significantly accelerates convergence in most cases.
+\begin{table}
+\caption{Flat Plate (syn3D \& NX Flow): Convergence metrics on the medium grid.}
+\label{tab:flatcpu}
+\begin{tabular}{@{}l cccc@{}}
+\toprule
+Solver & Iterations & Time taken (min) & Time per iteration (sec) & Residual reduction \\
+\midrule
+NX Flow (4 cores) & 205 & 34 & $\approx$ 10 & $10^{-10}$ \\
+syn3D (8 cores) & 400000 & 156 & $\approx$ 0.023 & $10^{-8}$
+\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{figure}[ht!]
 \centering
 \begin{subfigure}{.45\textwidth}
@@ -79,7 +96,7 @@ Several plots have been generated to compare the results between all solvers. Un
 
 \Cref{fig:flatmutcontour} shows contour plots of the dimensionless eddy viscosity $\frac{\mu_t}{\mu_{\infty}}$ and \Cref{fig:flatmu} shows line plots of the dimensionless eddy viscosity. As expected, the eddy viscosity increases gradually as the wall distance increases, as turbulence effects are more significant in the log-law region, and then diminishes as it reaches the far-field region. Moreover, the eddy viscosity, initially close to zero, increases with $x$ due to production near the wall as well as advection.
 
-\Cref{fig:flatu,fig:flatupyp} show profiles of the dimensionless velocity $u/u_\infty$ and $u^+$ respectively. The velocity profile shows a sharp gradient near the wall, typical of turbulent flows. Moreover, the height of the boundary layer, the region where velocity is reduced as compared to the far-field, grows with increasing $x$. It can also be seen that the $u^+$ profile agrees with the theory: $u^+$ follows the $u^+=y^=$ curve in the viscous sublayer and the log-law curve in the log-law region.
+\Cref{fig:flatu,fig:flatupyp} show profiles of the dimensionless velocity $u/u_\infty$ and $u^+$ respectively. The velocity profile shows a sharp gradient near the wall, typical of turbulent flows. Moreover, the height of the boundary layer, the region where velocity is reduced as compared to the far-field, grows with increasing $x$. It can also be seen that the $u^+$ profile agrees with the theory: $u^+$ follows the $u^+=y^+$ curve in the viscous sublayer and the log-law curve in the log-law region.
 
 Overall, there is excellent agreement between NX Flow and CFL3D and some level of discrepancy between syn3D and CFL3D. The source of discrepancy is easily seen in~\Cref{fig:flatmutmax}: the eddy viscosity jumps abruptly right at the leading edge for syn3D but not for the other two. The cause of this jump was investigated by the author as well as others working on the code, but a definite answer was unfortunately not found.
 \begin{figure}[ht!]

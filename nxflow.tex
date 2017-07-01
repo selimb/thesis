@@ -36,8 +36,8 @@ The terminology introduced here will be used for the remainder of this work of~\
 %
 The CVFE method was first proposed by Baliga and Patankar in~\cite{baliga1980new,baliga1983control}. This new method borrows two characteristics from the finite element method (FEM):
 \begin{enumerate}
-    \item the use of element-based linear Lagrangian interpolation functions (shape functions)
-    \item an element-by-element compilation of the coefficients in the discretized equations
+    \item the use of element-based linear Lagrangian interpolation functions (shape functions).
+    \item an element-by-element compilation of the coefficients in the discretized equations.
 \end{enumerate}
 These two characteristics are briefly discussed in the following sections. Readers interested in a thorough discussion of the classical FEM applied to fluid flow problems are referred to~\cite{reddy2000finite}.
 
@@ -139,7 +139,7 @@ The convective flux of an arbitrary quantity over an integration surface can be 
 \begin{equation*}
     \int_S (\rho\vec{u}\phi)\cdot\vec{n}~dS = \dot{m}_{ip}\phi_{ip},
 \end{equation*}
-where $\dot{m}_{ip}$ is the mass flow rate through the integration surface and is evaluated using the shape functions along with a pressure correction term~\cite{schneider1987control,rhie1983numerical}. The method is actually slightly modified from the cited references, but cannot be discussed.
+where $\dot{m}_{ip}$ is the mass flow rate through the integration surface and is evaluated using the shape functions along with a pressure correction term~\cite{schneider1987control,rhie1983numerical}.
 
 The value of $\phi$ at the integration point also needs to be approximated in terms of the nodal values of $\phi$. The default scheme for this is a first-order upwind scheme, in which $\phi_{ip}$ is approximated by the value of $\phi$ at the upstream node, i.e.:
 \begin{equation*}
