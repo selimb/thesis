@@ -8,7 +8,7 @@ The last validation case from the TMR website is the NACA 0012 airfoil case, whi
 \end{figure}
 This case was run using a fixed density, as it is an incompressible case. The Reynolds number value is 6 million and three angles of attack were used: 0, 10 and 15 degrees.
 
-\Cref{tab:naca0012} tabulates the lift and drag coefficients at all angles of attack and \Cref{fig:naca0012_0,fig:naca0012_10,fig:naca0012_15} compare the pressure and skin friction coefficient along the airfoil at $\alpha=0\degc$, $\alpha=10\degc$ and $\alpha=15\degc$ respectively. In all cases, there is a high level of suction on the upper surface at the leading edge, as the flow accelerates. The pressure differential between the upper and lower surface is, for the most part, what generates lift. The skin friction distribution is, as expected, qualitatively similar to that of the flat plate. 
+\Cref{tab:naca0012} tabulates the lift and drag coefficients at all angles of attack and \Cref{fig:naca0012_0,fig:naca0012_10,fig:naca0012_15} compare the pressure and skin friction coefficient along the airfoil at $\alpha=0\degc$, $\alpha=10\degc$ and $\alpha=15\degc$ respectively. In all cases, there is a high level of suction on the upper surface at the leading edge, as the flow accelerates. The pressure differential between the upper and lower surface is, for the most part, what generates lift. The skin friction distribution is, as expected, qualitatively similar to that of the flat plate.
 
 Even though there is decent agreement between the coefficients of pressure and skin friction, the drag values are heavily over-predicted by NX Flow. The pressure right at the leading edge is under-predicted by NX Flow. Compounded with the fact that most of the drag (over 90\%) is due to the pressure forces in this case, this results in the large discrepancy observed.
 \begin{table}
@@ -17,7 +17,7 @@ Even though there is decent agreement between the coefficients of pressure and s
     \label{tab:naca0012}
     \begin{tabular}{@{}l cc c cc c cc@{}}
         \toprule
-         & \multicolumn{2}{c}{$\alpha = 0\degc$} & \phantom{a} 
+         & \multicolumn{2}{c}{$\alpha = 0\degc$} & \phantom{a}
             & \multicolumn{2}{c}{$\alpha = 10\degc$} & \phantom{a}
             & \multicolumn{2}{c}{$\alpha = 15\degc$}\\
         \cline{2-3} \cline{5-6} \cline{8-9}

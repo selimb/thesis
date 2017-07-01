@@ -22,7 +22,7 @@ Unfortunately, this case could only be run on a mesh with an average $y^+$ of 50
 
 \Cref{fig:highdist} shows a contour of the wall distance. \Cref{fig:highstream} depicts streamlines around the airfoils, which shows the expected recirculation regions.
 
-\Cref{fig:highcp} compares the coefficient of pressure distribution with ISAAC~\cite{morrison1998numerical}. The cited reference also shows experimental data, although the results from ISAAC are virtually identical. It can be seen that the suction on the first element is not as pronounced as it should be for syn3D, which can be attributed to the coarseness of the grid. ISAAC also implements a transitional model, which allows the flow to naturally transition between the laminar regime and turbulent regime. Such a model is currently not implemented in syn3D, and this is another source of error~\cite{morrison1998numerical}. 
+\Cref{fig:highcp} compares the coefficient of pressure distribution with ISAAC~\cite{morrison1998numerical}. The cited reference also shows experimental data, although the results from ISAAC are virtually identical. It can be seen that the suction on the first element is not as pronounced as it should be for syn3D, which can be attributed to the coarseness of the grid. ISAAC also implements a transitional model, which allows the flow to naturally transition between the laminar regime and turbulent regime. Such a model is currently not implemented in syn3D, and this is another source of error~\cite{morrison1998numerical}.
 
 Finally, \Cref{tab:highld} compares the lift and drag coefficients. The lift coefficient is under-predicted and the drag coefficient is over-predicted. This discrepancy may be attributed to the reasons mentioned above.
 \begin{figure}

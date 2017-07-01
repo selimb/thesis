@@ -1,6 +1,6 @@
 \section{Three-dimensional bump-in-channel}
 \label{sec:syn3dbump}
-The third verification case from the TMR website that was investigated was the three-dimensional bump-in-channel, which is available on~\cite{tmr} under the name ``3D Bump-in-channel''. This case was only simulated with syn3D. 
+The third verification case from the TMR website that was investigated was the three-dimensional bump-in-channel, which is available on~\cite{tmr} under the name ``3D Bump-in-channel''. This case was only simulated with syn3D.
 
 The problem domain and flow conditions are shown in~\Cref{fig:3dbump}. While the website provides five sets of grids for this case as well, only results from the finest three grids are shown.
 \begin{figure}
@@ -12,7 +12,7 @@ The problem domain and flow conditions are shown in~\Cref{fig:3dbump}. While the
 
 The number of elements of the finest available grid exceeds 1.5 million and the residual could not be converged past $10^{-2}$ after over 6 days of computation with 64 cores, which is typically not sufficient for the purposes of verification -- results are shown nonetheless.
 
-\Cref{tab:syn3dbump} compares force coefficients and shows relatively good agreement. \Cref{fig:syn3dbumpcnv} shows the convergence for the finest three grids. 
+\Cref{tab:syn3dbump} compares force coefficients and shows relatively good agreement. \Cref{fig:syn3dbumpcnv} shows the convergence for the finest three grids.
 \begin{table}[ht!]
 \centering
 \caption{3D Bump (syn3D): Comparison of force coefficients for the three-dimensional bump.}
@@ -20,8 +20,8 @@ The number of elements of the finest available grid exceeds 1.5 million and the 
 \begin{tabular}{@{}l cccc@{}}
 \toprule
 Solver & $C_L$ & $C_D$ & $C_{Dv}$ & $C_{Dp}$ \\  \midrule
-CFL3D & 0.0250 & 0.0036  & 0.0032 & 0.0004  \\  
-syn3D &  0.0258 & 0.0035  & 0.0031 & 0.0004  \\  
+CFL3D & 0.0250 & 0.0036  & 0.0032 & 0.0004  \\
+syn3D &  0.0258 & 0.0035  & 0.0031 & 0.0004  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -67,7 +67,7 @@ syn3D &  0.0258 & 0.0035  & 0.0031 & 0.0004  \\
 \caption{3D Bump (syn3D): Comparison of coefficient of pressure distribution at various cross-sections.}
 \label{fig:syn3dbumpcp}
 \end{figure}
-\Cref{fig:syn3dbumpcp} compares $C_p$ at four fixed values of $y$. \Cref{fig:syn3dbumpmut03,fig:syn3dbumpmut12} show contour plots of the dimensionless eddy viscosity at $x=0.3$ and $x=1.2$ respectively. \Cref{fig:syn3dbumpmut} compares dimensionless eddy viscosity profiles at various locations. The plots are similar in trend to those of the two-dimensional bump, but vary due to the three-dimensional geometry of the bump. While the eddy viscosity is, as in previous cases, over-predicted by syn3D, \Cref{fig:syn3dbumpbad} displays a large discrepancy between syn3D and CFL3D. 
+\Cref{fig:syn3dbumpcp} compares $C_p$ at four fixed values of $y$. \Cref{fig:syn3dbumpmut03,fig:syn3dbumpmut12} show contour plots of the dimensionless eddy viscosity at $x=0.3$ and $x=1.2$ respectively. \Cref{fig:syn3dbumpmut} compares dimensionless eddy viscosity profiles at various locations. The plots are similar in trend to those of the two-dimensional bump, but vary due to the three-dimensional geometry of the bump. While the eddy viscosity is, as in previous cases, over-predicted by syn3D, \Cref{fig:syn3dbumpbad} displays a large discrepancy between syn3D and CFL3D.
 
 \begin{figure}[ht!]
 \centering

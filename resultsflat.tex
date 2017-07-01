@@ -1,5 +1,5 @@
 \section{Flat plate}
-The turbulent flow over a flat plate is investigated. All grids and results are available in~\cite{tmr} under the name: ``2D Zero pressure gradient flat plate''. The problem domain and flow conditions are shown in~\Cref{fig:flat}. NX Flow does not offer far-field BCs and uses an inlet BC on the leftmost face and openings on the top and rightmost face. Moreover, the problem was run with a fixed density in NX Flow so as to reduce computational cost, since this is essentially an incompressible case. 
+The turbulent flow over a flat plate is investigated. All grids and results are available in~\cite{tmr} under the name: ``2D Zero pressure gradient flat plate''. The problem domain and flow conditions are shown in~\Cref{fig:flat}. NX Flow does not offer far-field BCs and uses an inlet BC on the leftmost face and openings on the top and rightmost face. Moreover, the problem was run with a fixed density in NX Flow so as to reduce computational cost, since this is essentially an incompressible case.
 
 The Turbulence Modeling Resource provides five grids, each finer than the next, in order to compare so-called mesh independent results and to perform a grid study. The goal of a grid study is to establish that the obtained results will not vary significantly by further refining the mesh, and thus that the obtained results are as accurate as possible.
 \begin{figure}
@@ -75,11 +75,11 @@ where $D$ is the drag force and $A$ the reference area. For this case, the refer
     \label{fig:nxflatcnvstudy}
 \end{figure}
 
-Several plots have been generated to compare the results between all solvers. Unless otherwise noted, all results were obtained with the finest grid. \Cref{fig:flatcf} compares the skin friction along the plate. 
+Several plots have been generated to compare the results between all solvers. Unless otherwise noted, all results were obtained with the finest grid. \Cref{fig:flatcf} compares the skin friction along the plate.
 
 \Cref{fig:flatmutcontour} shows contour plots of the dimensionless eddy viscosity $\frac{\mu_t}{\mu_{\infty}}$ and \Cref{fig:flatmu} shows line plots of the dimensionless eddy viscosity. As expected, the eddy viscosity increases gradually as the wall distance increases, as turbulence effects are more significant in the log-law region, and then diminishes as it reaches the far-field region. Moreover, the eddy viscosity, initially close to zero, increases with $x$ due to production near the wall as well as advection.
 
-\Cref{fig:flatu,fig:flatupyp} show profiles of the dimensionless velocity $u/u_\infty$ and $u^+$ respectively. The velocity profile shows a sharp gradient near the wall, typical of turbulent flows. Moreover, the height of the boundary layer, the region where velocity is reduced as compared to the far-field, grows with increasing $x$. It can also be seen that the $u^+$ profile agrees with the theory: $u^+$ follows the $u^+=y^=$ curve in the viscous sublayer and the log-law curve in the log-law region. 
+\Cref{fig:flatu,fig:flatupyp} show profiles of the dimensionless velocity $u/u_\infty$ and $u^+$ respectively. The velocity profile shows a sharp gradient near the wall, typical of turbulent flows. Moreover, the height of the boundary layer, the region where velocity is reduced as compared to the far-field, grows with increasing $x$. It can also be seen that the $u^+$ profile agrees with the theory: $u^+$ follows the $u^+=y^=$ curve in the viscous sublayer and the log-law curve in the log-law region.
 
 Overall, there is excellent agreement between NX Flow and CFL3D and some level of discrepancy between syn3D and CFL3D. The source of discrepancy is easily seen in~\Cref{fig:flatmutmax}: the eddy viscosity jumps abruptly right at the leading edge for syn3D but not for the other two. The cause of this jump was investigated by the author as well as others working on the code, but a definite answer was unfortunately not found.
 \begin{figure}[ht!]

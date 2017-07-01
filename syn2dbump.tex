@@ -1,9 +1,9 @@
 \section{Two-dimensional bump-in-channel}
 Upon completion of the validation of the flow over a flat-plate, the turbulent flow on a two-dimensional bump-in-channel case was investigated. This case is also available on~\cite{tmr} under the name ``2D Bump-in-channel''. This case was only run with syn3D.
 
-The problem domain and flow conditions are shown in~\Cref{fig:2dbump}. It is referred to as two-dimensional due to the shape of the bump not depending upon the $z$ coordinate, as opposed to the three-dimensional bump in~\Cref{sec:syn3dbump}. 
+The problem domain and flow conditions are shown in~\Cref{fig:2dbump}. It is referred to as two-dimensional due to the shape of the bump not depending upon the $z$ coordinate, as opposed to the three-dimensional bump in~\Cref{sec:syn3dbump}.
 
-This case is different from the previous flat plate case because it involves wall curvature, which induces a pressure gradient. The TMR website also provides five grids for this case. 
+This case is different from the previous flat plate case because it involves wall curvature, which induces a pressure gradient. The TMR website also provides five grids for this case.
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{figs/2dbump/bumpBCpic.jpg}
@@ -17,9 +17,9 @@ This case is different from the previous flat plate case because it involves wal
 \label{tab:syn2dbump1}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-Solver & $C_L$ & $C_D$ & $C_{Dv}$ & $C_{Dp}$ \\  
+Solver & $C_L$ & $C_D$ & $C_{Dv}$ & $C_{Dp}$ \\
 \midrule
-CFL3D & 0.0249 & 0.0036  & 0.0032 & 0.0004  \\ 
+CFL3D & 0.0249 & 0.0036  & 0.0032 & 0.0004  \\
 syn3D & 0.0251 &  0.0035 & 0.0031 & 0.0004  \\  \bottomrule
 \end{tabular}
 
@@ -33,7 +33,7 @@ syn3D & 0.0251 &  0.0035 & 0.0031 & 0.0004  \\  \bottomrule
 \toprule
 & \multicolumn{3}{c}{$C_f$} \\
 \cline{2-4}
-Solver & $x=0.75$ & $x=0.6321975$ & $x=0.8678025$ \\  
+Solver & $x=0.75$ & $x=0.6321975$ & $x=0.8678025$ \\
 \midrule
 CFL3D & 0.00615 & 0.00519  & 0.002680   \\
 syn3D & 0.00610 & 0.00519  & 0.002835  \\
@@ -125,14 +125,14 @@ syn3D & 0.00610 & 0.00519  & 0.002835  \\
 \label{fig:syn2dbumpu}
 \end{figure}
 
-\Cref{fig:syn2dbumpcf} shows the $C_f$ distribution over the bump for the finest grid. The skin friction coefficient can be seen to start high, slowly decrease in the flat portion and then increase on the bump as it accelerates. 
+\Cref{fig:syn2dbumpcf} shows the $C_f$ distribution over the bump for the finest grid. The skin friction coefficient can be seen to start high, slowly decrease in the flat portion and then increase on the bump as it accelerates.
 
-\Cref{fig:syn2dbumpcp} shows the $C_p$ distribution. The trend in this plot is similar to the skin friction plot. The pressure decreases as the flow accelerates at the leading edge of the bump. The pressure then increases again once the peak is reached. 
+\Cref{fig:syn2dbumpcp} shows the $C_p$ distribution. The trend in this plot is similar to the skin friction plot. The pressure decreases as the flow accelerates at the leading edge of the bump. The pressure then increases again once the peak is reached.
 
 \Cref{fig:syn2dbumpmutcontour} compares the contour of eddy viscosity over the bump and \Cref{fig:syn2dbumpmut} compares the eddy viscosity through line plots. Similar to the flat plate, $\mu_t$ increases with $x$. In, \Cref{fig:syn2dbumpmutprof}, it can again be seen that the eddy viscosity increases with $y$ until it reaches a maximum value and begins to decrease again as it reaches the far-field region.
-These plots show decent agreement between CFL3D and syn3D and the spike in eddy viscosity can be seen at the leading edge of the solid wall in~\Cref{fig:syn2dbumpmaxmut}. 
+These plots show decent agreement between CFL3D and syn3D and the spike in eddy viscosity can be seen at the leading edge of the solid wall in~\Cref{fig:syn2dbumpmaxmut}.
 
-\Cref{fig:syn2dbumpu} compares the velocity profile. A sharp velocity gradient near the wall is observed at both locations, although the height of the boundary layer is greater as $x$ increases. 
+\Cref{fig:syn2dbumpu} compares the velocity profile. A sharp velocity gradient near the wall is observed at both locations, although the height of the boundary layer is greater as $x$ increases.
 \begin{figure}[ht!]
 \centering
   \includegraphics[width=0.7\textwidth]{figs/2dbump/CfGridStudy.pdf}
@@ -212,4 +212,4 @@ These plots show decent agreement between CFL3D and syn3D and the spike in eddy 
 \label{fig:syn2dbumpcflocstudy}
 \end{figure}
 
-\Cref{fig:syn2dbumpcfstudy,fig:syn2dbumpcpstudy} show $C_f$ and $C_p$ distributions along the bump for all grids and \Cref{fig:syn2dbumpmutstudy} compares the eddy viscosity distribution between grids. \Cref{fig:syn2dbumpforcestudy,fig:syn2dbumpcflocstudy} show the convergence of force coefficients and skin friction for various grid sizes, compared with results from CFL3D and FUN3D. Again, it can be seen that there is much more dependence on grid size for syn3D as compared to the NASA solvers, although most values are very similar on the finest grid. 
+\Cref{fig:syn2dbumpcfstudy,fig:syn2dbumpcpstudy} show $C_f$ and $C_p$ distributions along the bump for all grids and \Cref{fig:syn2dbumpmutstudy} compares the eddy viscosity distribution between grids. \Cref{fig:syn2dbumpforcestudy,fig:syn2dbumpcflocstudy} show the convergence of force coefficients and skin friction for various grid sizes, compared with results from CFL3D and FUN3D. Again, it can be seen that there is much more dependence on grid size for syn3D as compared to the NASA solvers, although most values are very similar on the finest grid.

@@ -2,15 +2,15 @@
 \label{sec:fv}
 %
 %
-The finite volume method requires the specification of a \textit{computational grid}, a discrete representation of the geometric domain on which the problem is to be solved. Another name for computational grid is \textit{mesh}. This essentially divides the domain into a finite number of subdomains. In the case of the finite volume method, these subdomains are referred to as \textit{control volumes} (CVs). The governing equations must then be solved over each of these discrete control volumes, which results in a solution field at discrete locations, as opposed to an analytical function. 
+The finite volume method requires the specification of a \textit{computational grid}, a discrete representation of the geometric domain on which the problem is to be solved. Another name for computational grid is \textit{mesh}. This essentially divides the domain into a finite number of subdomains. In the case of the finite volume method, these subdomains are referred to as \textit{control volumes} (CVs). The governing equations must then be solved over each of these discrete control volumes, which results in a solution field at discrete locations, as opposed to an analytical function.
 
 \subsection{Integral form of the conservation laws}
 A special property of the finite volume method is that it uses the integral form of the conservation equations. Moreover, it employs the Gauss theorem, also known as divergence theorem, to express volume integrals as surface integrals. Specifically, let $\vec{F}$ be a continuously differentiable vector field, $\vol$ be a volume in three-dimensional space, $\surf$ be the boundary of the volume and $\text{d}S$ be a surface element along with its associated unit outward normal vector $\vec{n}$, the divergence theorem states that:
 \begin{equation*}
-    \iiint_{\vol} \left( \nabla \cdot \vec{F} \right)~d\vol = 
+    \iiint_{\vol} \left( \nabla \cdot \vec{F} \right)~d\vol =
         \oiint_{\surf} (\vec{F}\cdot\vec{n})~dS.
 \end{equation*}
-The integral on the left-hand side is a volume integral, whereas the integral on the right-hand side is a surface integral. For the remainder of this work, the triple integral and closed integral notations will be replaced with simple integrals, where the type can be inferred from the limit ($\vol$ or $\surf$). 
+The integral on the left-hand side is a volume integral, whereas the integral on the right-hand side is a surface integral. For the remainder of this work, the triple integral and closed integral notations will be replaced with simple integrals, where the type can be inferred from the limit ($\vol$ or $\surf$).
 
 Investigation of~\Cref{eq:mass,eq:mom,eq:energy} reveals commonalities between the equations. Again, let $\phi$ be a general conserved property, the so-called transport equation for $\phi$ can be written in integral form as:
 \begin{equation}
@@ -20,11 +20,11 @@ Investigation of~\Cref{eq:mass,eq:mom,eq:energy} reveals commonalities between t
         + \int_\vol Q_\phi~d\vol
     \label{eq:fvtransport},
 \end{equation}
-where $\Gamma$ is a general diffusion coefficient and $Q_\phi$ is the source term. Reading from left to right, the terms are labelled as: temporal derivative term, convective term, diffusive term and source term. The convective and diffusive terms being surface integrals, are also referred to as \textit{flux} terms. All conservation equations, specifically mass, momentum and energy, can be written in this form, where $Q$ takes care of the special terms, e.g. the pressure gradient term in the momentum equation. 
+where $\Gamma$ is a general diffusion coefficient and $Q_\phi$ is the source term. Reading from left to right, the terms are labelled as: temporal derivative term, convective term, diffusive term and source term. The convective and diffusive terms being surface integrals, are also referred to as \textit{flux} terms. All conservation equations, specifically mass, momentum and energy, can be written in this form, where $Q$ takes care of the special terms, e.g. the pressure gradient term in the momentum equation.
 
-The finite volume method is attractive due to its simplicity and its ability to accommodate any type of grid. The method is also \textit{conservative} by construction, so long as fluxes for CVs sharing a boundary are identical. 
+The finite volume method is attractive due to its simplicity and its ability to accommodate any type of grid. The method is also \textit{conservative} by construction, so long as fluxes for CVs sharing a boundary are identical.
 
-Again,~\Cref{eq:fvtransport} is to be solved over all CVs. Within each CV lies a \textit{computational node}, also known as field point, at which the dependent quantities are to be calculated. 
+Again,~\Cref{eq:fvtransport} is to be solved over all CVs. Within each CV lies a \textit{computational node}, also known as field point, at which the dependent quantities are to be calculated.
 %
 %
 \subsection{Numerical approximations}
@@ -35,7 +35,7 @@ The integral transport equation in~\Cref{eq:fvtransport} remains analytical; no 
 \begin{equation*}
     a_P \phi_P + \sum_{nb}a_{nb}\phi_{nb} = b_p,
 \end{equation*}
-where $P$ is the control volume of interest, $a$'s and $b$'s are constant coefficients, and $nb$ represents the neighboring field points involved in the discretization. One speaks of a \textit{stencil} when referring to these neighbors. Discretization inevitably introduces discretization errors, which is why it is always an approximation. The goal is to reduce these errors to a negligible level. 
+where $P$ is the control volume of interest, $a$'s and $b$'s are constant coefficients, and $nb$ represents the neighboring field points involved in the discretization. One speaks of a \textit{stencil} when referring to these neighbors. Discretization inevitably introduces discretization errors, which is why it is always an approximation. The goal is to reduce these errors to a negligible level.
 
 Discretization of the finite volume equations can be split in two steps:
 \begin{description}
@@ -44,14 +44,14 @@ Discretization of the finite volume equations can be split in two steps:
 \end{description}
 
 \subsubsection{Spatial discretization}
-Every term in~\Cref{eq:fvtransport} is an integral. To calculate either the volume or surface integrals exactly would require knowledge of the integrand everywhere on the volume or surface; however such information is not available. Discretization of the integrals in~\Cref{eq:fvtransport} can be done using three levels of approximation: integration, interpolation and differentiation. 
+Every term in~\Cref{eq:fvtransport} is an integral. To calculate either the volume or surface integrals exactly would require knowledge of the integrand everywhere on the volume or surface; however such information is not available. Discretization of the integrals in~\Cref{eq:fvtransport} can be done using three levels of approximation: integration, interpolation and differentiation.
 
 Let $\vec{F}$ be a flux vector, the closed surface integrals for an arbitrary polyhedron, which is the only type of three-dimensional control volume that is used in most finite volume codes, can be written as:
 \begin{equation}
     \int_{\surf} (\vec{F}\cdot \vec{n})~dS = \sum_{k=1}^{N_f} \int_{S_k} (\vec{F}\cdot\vec{n}_k)~dS
     \label{eq:surfint},
 \end{equation}
-where $N_f$ is the number of faces. Taking for instance a hexahedron, a commonly used element in CFD, like the one depicted in~\Cref{fig:hex}, the closed integral is simply the sum of the integral over all $N_f = 6$ faces. 
+where $N_f$ is the number of faces. Taking for instance a hexahedron, a commonly used element in CFD, like the one depicted in~\Cref{fig:hex}, the closed integral is simply the sum of the integral over all $N_f = 6$ faces.
 
 The individual face integrals then need to be numerically integrated. The most commonly used numerical integration method (quadrature) is the midpoint rule, for which there is only one integration point placed at the face center. Application of the midpoint rule to a single surface integral in~\Cref{eq:surfint} yields:
 \begin{equation*}
@@ -66,7 +66,7 @@ The volume integral can also be numerically integrated using the midpoint rule. 
 \begin{equation*}
     \int_\vol G~d\vol = G_{P} V + \order(\delta^2),
 \end{equation*}
-where $V$ is the volume and $G_{P}$ is $G$ at the field point $P$. This method is of second-order accuracy provided that P lies at the CV centroid. 
+where $V$ is the volume and $G_{P}$ is $G$ at the field point $P$. This method is of second-order accuracy provided that P lies at the CV centroid.
 
 Application of the integral approximations to~\Cref{eq:fvtransport}, ignoring the $\order$ terms, results in:
 \begin{equation}
@@ -78,7 +78,7 @@ Application of the integral approximations to~\Cref{eq:fvtransport}, ignoring th
     \label{eq:spatial}.
 \end{equation}
 
-Whereas all quantities at point $P$ are readily available, quantities and gradients at the integration points must be expressed in terms of the field point values via interpolation and differentiation schemes respectively. Interpolation and differentiation schemes are discussed for each solver separately. 
+Whereas all quantities at point $P$ are readily available, quantities and gradients at the integration points must be expressed in terms of the field point values via interpolation and differentiation schemes respectively. Interpolation and differentiation schemes are discussed for each solver separately.
 
 \subsubsection{Temporal discretization}
 Application of spatial discretization schemes leads to an ordinary differential equation (ODE) for each CV of the form:
@@ -86,11 +86,11 @@ Application of spatial discretization schemes leads to an ordinary differential 
     \pdiff{(\rho\phi V)_P}{t} = R_P
     \label{eq:temp1},
 \end{equation}
-where $R$ is the so-called residual of the equation and generally includes quantities depending on neighboring field points. 
+where $R$ is the so-called residual of the equation and generally includes quantities depending on neighboring field points.
 
 Given the solution field $\phi^n$ at time $t$, a new solution $\phi^{n+1}$ at time $t + \Delta t$ is sought. This is typically done even for steady-state problems using the concept of pseudo-time~\cite{blazek2015computational}, which is necessary due to the non-linearity of the equations. Integrating in time on both sides of~\Cref{eq:temp1} results in:
 \begin{equation}
-    \int_t^{t+\Delta t} 
+    \int_t^{t+\Delta t}
         \pdiff{(\rho \phi V)_P}{t}
    ~dt
     = -\int_t^{t+\Delta t} R_P~dt
@@ -102,16 +102,16 @@ Since the only unknown field in this equation is $\phi$, it is possible to say:
 \end{equation*}
 The left-hand side \Cref{eq:time2} can then be evaluated as:
 \begin{equation}
-    \int_t^{t+\Delta t} 
+    \int_t^{t+\Delta t}
         \pdiff{(\rho \phi V)_P}{t}
-   ~dt = 
+   ~dt =
    (\rho V)_P (\phi^{n+1} - \phi^n)_P
    = (\rho V)_P \Delta \phi_P^n
    \label{eq:timediff}.
 \end{equation}
 Integration of the right-hand side of~\Cref{eq:time2} can be done in various ways: one can use the solution at time $t$, time $t + \Delta t$ or a mix of both to calculate the integral. Certain codes even use the solution at time $t - \Delta t$, although this is not done in either solver presented in this work.  A family of methods can be generalized by introducing a weighting parameter $\theta$ which is allowed to vary between 0 and 1 and approximating the integral of the residual as:
 \begin{equation}
-    \int_t^{t+\Delta t} R_P~dt = \left[ 
+    \int_t^{t+\Delta t} R_P~dt = \left[
         \theta R_P^{n+1} + (1 - \theta) R_P^n
     \right] \Delta t
     \label{eq:timeint}.
@@ -138,4 +138,4 @@ Regardless of the chosen scheme, the result is a linear system of equations of t
 \begin{equation*}
     Ax = b,
 \end{equation*}
-where $A$ is a sparse matrix, $x$ is the vector of unknowns and $b$ is a vector. The linear system can be solved with a direct or iterative method. 
+where $A$ is a sparse matrix, $x$ is the vector of unknowns and $b$ is a vector. The linear system can be solved with a direct or iterative method.

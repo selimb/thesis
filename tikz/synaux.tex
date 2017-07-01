@@ -4,14 +4,14 @@
 }
 \def\fieldp[#1](#2)(#3)% Syntax: [loc] (coords) (tex)
     { \draw [fill] (#2) circle [radius=0.02] node [#1] {\scriptsize #3}; }
-    
+
 \fieldp[below](0.5,0.5)($i,j$);
 \fieldp[above](0.5,1.5)($i,j{+}1$);
 \fieldp[below](1.5,0.5)($i{+}1,j$);
 \fieldp[above](1.5,1.5)($i{+}1,j{+}1$);
 
-%  \def\intp[#1](#2)(#3) 
-%      { \node at (#2) {$\times$}; 
+%  \def\intp[#1](#2)(#3)
+%      { \node at (#2) {$\times$};
 %         \node [#1] at (#2) {#3}; }
 
 % \intp[below](1.0, 0.5)(asd);

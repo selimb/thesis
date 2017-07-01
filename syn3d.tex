@@ -36,18 +36,18 @@ where $C_1 = 1.461E-6$, $S = 110.3$. The temperature in the previous equation is
 \begin{equation*}
     T = T_{ref} \frac{p}{\rho},
 \end{equation*}
-The free-stream dynamic viscosity is computed in the same manner using $T_{ref}$ in the place of $T$. 
+The free-stream dynamic viscosity is computed in the same manner using $T_{ref}$ in the place of $T$.
 
 Substitution of the non-dimensional relations into~\Cref{eq:fansmass,eq:fansmom,eq:fansenergy}, the Favre-averaged Navier-Stokes equations, and rearranging yields:
 \begin{align}
     \Dphi{} &= 0 \\
     \pdiff{\rho\vec{u}}{t}
-    + \nabla\cdot(\rho\vec{u}\otimes\vec{u}) 
-    &= -\nabla p + \ndim\nabla\cdot(\tau + \tau^T) 
+    + \nabla\cdot(\rho\vec{u}\otimes\vec{u})
+    &= -\nabla p + \ndim\nabla\cdot(\tau + \tau^T)
     \\
     \pdiff{\rho E}{t} + \nabla\cdot (\rho \vec{u} H) &=
-        \ndim\nabla\cdot \left[ 
-            (\tau + \tau^T) \cdot \vec{u} 
+        \ndim\nabla\cdot \left[
+            (\tau + \tau^T) \cdot \vec{u}
         \right]
         - \ndim\nabla\cdot\left(k_{\text{eff}}\nabla T\right) .
 \end{align}
@@ -56,9 +56,9 @@ The equations are unchanged except for the additional scaling factor $\ndim$ mul
 Repeating the process above for the Spalart-Allmaras equation and rearranging the production and destruction terms so as to group terms with common factors results in:
 \begin{align}
 \begin{split}
-    \pdiff{\sa}{t} + \vec{u}\cdot(\nabla\sa) &= 
+    \pdiff{\sa}{t} + \vec{u}\cdot(\nabla\sa) &=
         c_{b1}(1 - f_{t2})\Omega\sa
-        + \ndim \left\{ 
+        + \ndim \left\{
             C_{b1}[(1 - f_{t2})f_{v2} + f_{t2}]\frac{1}{\kappa^2} - c_{w1}f_w
         \right\} \left(\frac{\sa}{d}\right)^2
         \\
@@ -69,7 +69,7 @@ Repeating the process above for the Spalart-Allmaras equation and rearranging th
 \end{align}
 The auxiliary functions require the same treatment:
 \begin{gather*}
-    r = \text{min} \left[ 
+    r = \text{min} \left[
         \ndim \frac{\sa}{\hat{S}\kappa^2 d^2}, 10
     \right] \\
     \hat{S} = \Omega + \ndim \frac{\sa}{\kappa^2 d^2} f_{v2}.
@@ -80,8 +80,8 @@ Unmentioned functions as well as constants remain unchanged.
 \subsection{Computational Grid}
 %
 \label{sec:synmesh}
-Syn3D solves problems on three-dimensional multiblock-structured meshes, making the hexahedron the only acceptable element type. Moreover, a field point is located at the centroid of each element -- it follows that the CVs are all hexahedrons. A general hexahedron CV is shown in~\Cref{fig:hex}. In structured grids, each field point, or CV, is uniquely identified by its $i$, $j$ and $k$ indices. Its neighbors can also be identified by incrementing and decrementing the $i$, $j$ and $k$ indices, which is the main advantage of this method. 
-%This is illustrated in~\Cref{fig:structured} for the two-dimensional case, where elements are instead quadrilaterals. 
+Syn3D solves problems on three-dimensional multiblock-structured meshes, making the hexahedron the only acceptable element type. Moreover, a field point is located at the centroid of each element -- it follows that the CVs are all hexahedrons. A general hexahedron CV is shown in~\Cref{fig:hex}. In structured grids, each field point, or CV, is uniquely identified by its $i$, $j$ and $k$ indices. Its neighbors can also be identified by incrementing and decrementing the $i$, $j$ and $k$ indices, which is the main advantage of this method.
+%This is illustrated in~\Cref{fig:structured} for the two-dimensional case, where elements are instead quadrilaterals.
 A more detailed discussion of grid generation is given in~\cite{blazek2015computational}.
 \begin{figure}
 \centering
@@ -116,7 +116,7 @@ The governing equations are written in generalized curvilinear coordinates throu
 \begin{figure}
     \centering
     \begin{tikzpicture}
-        \input{tikz/transformation}  
+        \input{tikz/transformation}
     \end{tikzpicture}
     \caption{Mapping from physical space ($x$, $y$) to computational space ($\xi$, $\eta$)}
     \label{fig:transformation}
@@ -153,7 +153,7 @@ where the $\vec{n}$ for the face in the $\xi_k$ direction is chosen and in this 
 %     \begin{pmatrix}
 %         \pdiff{\xi}{x} & \pdiff{\eta}{x} & \pdiff{\zeta}{x} \\
 %         \pdiff{\xi}{y} & \pdiff{\eta}{y} & \pdiff{\zeta}{y} \\
-%         \pdiff{\xi}{z} & \pdiff{\eta}{z} & \pdiff{\zeta}{z} 
+%         \pdiff{\xi}{z} & \pdiff{\eta}{z} & \pdiff{\zeta}{z}
 %     \end{pmatrix}
 %     \begin{pmatrix}
 %         \pdiff{}{\xi} \\
@@ -173,7 +173,7 @@ where the $\vec{n}$ for the face in the $\xi_k$ direction is chosen and in this 
 %     \begin{pmatrix}
 %         \pdiff{x}{\xi} & \pdiff{y}{\xi} & \pdiff{z}{\xi} \\
 %         \pdiff{x}{\eta} & \pdiff{y}{\eta} & \pdiff{y}{\eta} \\
-%         \pdiff{x}{\zeta} & \pdiff{y}{\zeta} & \pdiff{z}{\zeta} 
+%         \pdiff{x}{\zeta} & \pdiff{y}{\zeta} & \pdiff{z}{\zeta}
 %     \end{pmatrix}
 %     \begin{pmatrix}
 %         \pdiff{}{x} \\
@@ -182,18 +182,18 @@ where the $\vec{n}$ for the face in the $\xi_k$ direction is chosen and in this 
 %     \end{pmatrix}
 %     \label{eq:transform2}
 % \end{equation}
-% Elements of the matrix in~\Cref{eq:transform2} can easily be calculated. The metric terms can then be obtained by inverting said matrix for each CV. 
+% Elements of the matrix in~\Cref{eq:transform2} can easily be calculated. The metric terms can then be obtained by inverting said matrix for each CV.
 
 Then, given the metric terms, derivatives can be evaluated using simple finite difference methods, which is the primary goal of performing a coordinate transformation. For instance, one can obtain an approximation to $\partial \phi / \partial \xi$ using centered differences:
 \begin{equation*}
     \pdiff{\phi}{\xi} = \frac{\phi_{i+1,j,k} - \phi_{i-1,j,k}}{2\Delta \xi},
 \end{equation*}
-while $\Delta \xi$ is arbitrary, it is typically chosen to be equal to one. 
+while $\Delta \xi$ is arbitrary, it is typically chosen to be equal to one.
 
 Finally, usage of a curvilinear grid also allows the closed surface integral, where the midpoint method is used as the quadrature, to be written for the CV at coordinate $(i,j,k)$ as:
 \begin{align}
     \begin{split}
-    \int_{\surf} (\vec{F}\cdot\vec{n})~dS &= 
+    \int_{\surf} (\vec{F}\cdot\vec{n})~dS &=
         (\vec{F}\cdot \vec{S}_1)_{i+\frac{1}{2},j,k}
       - (\vec{F}\cdot \vec{S}_1)_{i-\frac{1}{2},j,k} \\
       &+ (\vec{F}\cdot \vec{S}_2)_{i,j+\frac{1}{2},k}
@@ -214,7 +214,7 @@ This section describes the numerical discretization of the Favre-averaged Navier
 %
 Syn3D uses the modified Runge-Kutta approach introduced by Jameson \textit{et al.}~\cite{jameson1981numerical} to march the solution in pseudo-time. Let $\vec{W}$ be the vector of conserved variables defined as:
 \begin{equation}
-    \vec{W} = 
+    \vec{W} =
     \begin{Bmatrix}
         \rho \\
         \rho u_1 \\
@@ -227,11 +227,11 @@ Syn3D uses the modified Runge-Kutta approach introduced by Jameson \textit{et al
 and $\vec{R}$ be the residual vector, the modified Runge-Kutta scheme advances the solution at the current time level $\vec{W}^{(n)}$ to the solution at the next time level $\vec{W}^{(n+1)}$ in the following manner:
 \begin{align*}
     \vec{W}^{(0)} &= \vec{W}^{(n)} \\
-    \vec{W}^{(k)} &= \vec{W}^{(0)} - \alpha_k \Delta t \vec{R}(\vec{W}^{(k-1)}), 
+    \vec{W}^{(k)} &= \vec{W}^{(0)} - \alpha_k \Delta t \vec{R}(\vec{W}^{(k-1)}),
         \quad k=1,...,m \\
     \vec{W}^{(n+1)} &= \vec{W}^{(m)},
 \end{align*}
-where $m$ is the total number of stages and $\vec{R}(\vec{W}^{(k-1)})$ is the residual evaluated using the solution from the previous stage $\vec{W}^{(k-1)}$. Compared to the classical Runge-Kutta methods where the solution at each stage is kept to obtain the solution at the next time level, the modified Runge-Kutta only requires storage of the latest residual and the zeroth solution, which reduces memory requirements. 
+where $m$ is the total number of stages and $\vec{R}(\vec{W}^{(k-1)})$ is the residual evaluated using the solution from the previous stage $\vec{W}^{(k-1)}$. Compared to the classical Runge-Kutta methods where the solution at each stage is kept to obtain the solution at the next time level, the modified Runge-Kutta only requires storage of the latest residual and the zeroth solution, which reduces memory requirements.
 
 The dissipative fluxes, which includes viscous fluxes and artificial dissipation, and convective fluxes are treated separately when computing the residual. The residual at each stage can be defined as:
 \begin{align*}
@@ -243,7 +243,7 @@ where $\vec{R}_c$ and $\vec{R}_d$ are the convective and dissipative contributio
 \begin{align*}
     \alpha_1 = 0.25 \quad \alpha_2 = 0.1667 \quad \alpha_3 = 0.375
         \quad \alpha_4=0.5 \quad \alpha_5 = 1.0 \\
-    \beta_1 = 1,0 \quad \beta_2 = 0.0 \quad \beta_3 = 0,56 
+    \beta_1 = 1,0 \quad \beta_2 = 0.0 \quad \beta_3 = 0,56
         \quad \beta_4 = 0.0 \quad \beta_5 = 0.44.
 \end{align*}
 %
@@ -268,7 +268,7 @@ The above equation results in a three-dimensional vector with each component bel
 %
 \subsubsection{Discretization of viscous fluxes}
 %
-On top of the evaluation of quantities at each integration point, computation of viscous fluxes also requires computation of derivative terms, which are not available either at the field points or integration points. This is done using two levels of approximation: interpolation and differentiation. 
+On top of the evaluation of quantities at each integration point, computation of viscous fluxes also requires computation of derivative terms, which are not available either at the field points or integration points. This is done using two levels of approximation: interpolation and differentiation.
 
 The value of the flux on a given face is approximated by the arithmethic average of the flux quantities at the four vertices sharing this face. For instance, let $\vec{F}_v$ be the viscous flux, then its value on the $i+\frac{1}{2}$ face is approximated as:
 \begin{equation*}
@@ -298,7 +298,7 @@ An auxiliary control volume is formed at each vertex by joining the centroids of
 
 Gradients $\nabla \phi$ at the vertices are calculated through a transformation to curvilinear coordinates. For example, the k-component of the gradient at the vertex mentioned above is written as:
 \begin{equation}
-    \left[ \pdiff{\phi}{x_k} \right]_{i+\half,j+\half,k+\half} = 
+    \left[ \pdiff{\phi}{x_k} \right]_{i+\half,j+\half,k+\half} =
         \frac{1}{J_{i+\half,j+\half,k+\half}}
         \left[
             \pdiff{\hat{\phi}_{1n}}{\xi} + \pdiff{\hat{\phi}_{2n}}{\eta} + \pdiff{\hat{\phi}_{3n}}{\zeta}
@@ -307,8 +307,8 @@ Gradients $\nabla \phi$ at the vertices are calculated through a transformation 
 \end{equation}
 where $J$ is the volume of the auxiliary control volume and is approximated in the same way as $\Gamma$. The gradient components in the computational domain are calculated by taking an average of the centered differences in each direction, which can be written as:
 \begin{gather*}
-    \left[ 
-        \pdiff{\hat{\phi}_{1n}}{\xi} 
+    \left[
+        \pdiff{\hat{\phi}_{1n}}{\xi}
     \right]_{i+\half,j+\half,k+\half}
     = \frac{
         (\hat{\phi}_{1n,i+1,j,k} - \hat{\phi}_{1n,i,j,k})
@@ -372,7 +372,7 @@ where $\vec{t}$ is the vector tangential to the boundary and $\phi$ represents a
 
 Finally, all simulations have to be conducted within a finite bounded domain. However, simulating external flows requires the incoming far-field (free-stream) flow to not be affected by the body under consideration. Far-field boundary conditions are used for this purpose. Because this is not obvious in practice, there are various ways to implement such conditions. The method used in syn3D is described in detail in~\cite{jameson1983solution} and only briefly summarized here. At far-field boundaries, a characteristic based condition using Riemann invariants is imposed. The Riemann invariants can be expressed as:
 \begin{align*}
-    R_\infty &= \vec{u}_\infty\cdot\vec{n} - \frac{2 c_\infty}{\gamma - 1} \\ 
+    R_\infty &= \vec{u}_\infty\cdot\vec{n} - \frac{2 c_\infty}{\gamma - 1} \\
     R_e &= \vec{u}_e\cdot\vec{n} + \frac{2 c_\infty}{\gamma - 1},
 \end{align*}
 where freestream and interior values are denoted by the $\infty$ and $e$ subscripts and $c$ is the speed of sound. The velocity normal to the boundary and the speed of sound can then be expressed as:
@@ -389,7 +389,7 @@ Pressure, density and energy are calculated using entropy.
 %
 \subsection{Discretization of turbulent equations}
 \label{sec:synturb}
-Turbulent models, including the Spalart-Allmaras equation, are discretized differently than the fluid flow equations: are not solved using the finite volume method, but rather the finite difference method. Thus, the differential form, not integration form, of the equation is solved and each derivative is expressed in curvilinear coordinates through application of~\Cref{eq:transform}. It should be noted that field points are still located at the centroids of the hexahedrons. Schemes used for each term in~\Cref{eq:synsa} are detailed in the following sections. 
+Turbulent models, including the Spalart-Allmaras equation, are discretized differently than the fluid flow equations: are not solved using the finite volume method, but rather the finite difference method. Thus, the differential form, not integration form, of the equation is solved and each derivative is expressed in curvilinear coordinates through application of~\Cref{eq:transform}. It should be noted that field points are still located at the centroids of the hexahedrons. Schemes used for each term in~\Cref{eq:synsa} are detailed in the following sections.
 
 A fully implicit scheme is used to discretize the time derivative and a segregated solve is used to advance the turbulence and fluid flow equations in time, as will also be detailed in the following sections.
 %
@@ -397,7 +397,7 @@ A fully implicit scheme is used to discretize the time derivative and a segregat
 %
 It can be seen that solving the Favre-averaged fluid flow equations requires that another equation be solved, in this case the SA equation. These equations are inherently coupled, since the momentum and energy equations depend on the eddy viscosity obtained from solving the turbulence equation and the turbulence equation itself depends on fluid quantities such as velocity. A common way to approach this problem is to solve each set of equations separately at each time step, which is what is done in syn3D. The procedure is described by the following steps:
 \begin{enumerate}
-    \item Solve the turbulence equations using the latest solution field. 
+    \item Solve the turbulence equations using the latest solution field.
     \item Update the eddy viscosity and modified eddy viscosity $\sa$.
     \item Solve the fluid flow equations using the same solution field as well as the updated viscosities
     \item Update the solution field
@@ -410,24 +410,24 @@ The production and destruction terms do not involve derivatives other than the v
 \subsubsection{Discretization of advection term}
 The advection term involves the gradient of the modified eddy viscosity, which can be expressed in curvilinear coordinates as:
 \begin{align*}
-    \vec{u}\cdot(\nabla\sa) &= 
-        u_x\pdiff{\sa}{x} 
-        + u_y\pdiff{\sa}{y} 
+    \vec{u}\cdot(\nabla\sa) &=
+        u_x\pdiff{\sa}{x}
+        + u_y\pdiff{\sa}{y}
         + u_z\pdiff{\sa}{z} \\
-    &= 
-    u\left[ 
+    &=
+    u\left[
         \pdiff{\xi}{x}\pdiff{\sa}{\xi} + \pdiff{\eta}{x}\pdiff{\sa}{\eta} +
             \pdiff{\zeta}{x}\pdiff{\sa}{\zeta}
     \right]
     \\
     &+
-    v\left[ 
+    v\left[
         \pdiff{\xi}{y}\pdiff{\sa}{\xi} + \pdiff{\eta}{y}\pdiff{\sa}{\eta} +
             \pdiff{\zeta}{y}\pdiff{\sa}{\zeta}
     \right]
     \\
     &+
-    w\left[ 
+    w\left[
         \pdiff{\xi}{z}\pdiff{\sa}{\xi} + \pdiff{\eta}{z}\pdiff{\sa}{\eta} +
             \pdiff{\zeta}{z}\pdiff{\sa}{\zeta}
     \right],
@@ -460,8 +460,8 @@ This scheme leads to a three-point stencil in each curvilinear direction.
 %
 The diffusion term involves the divergence of the gradient. The gradient is first expressed in curvilinear coordinates similarly to the gradient appearing in the convective term. For the sake of conciseness, let $\delta_x$ represent only discretization for the $x$ derivative, namely:
 \begin{equation*}
-    \pdiff{\sa}{x} = \delta_x = 
-    \left[ 
+    \pdiff{\sa}{x} = \delta_x =
+    \left[
         \pdiff{\xi}{x}\pdiff{\sa}{\xi} + \pdiff{\eta}{x}\pdiff{\sa}{\eta} +
             \pdiff{\zeta}{x}\pdiff{\sa}{\zeta}
     \right].
@@ -485,14 +485,14 @@ with unequal indices $i$ and $j$. Such terms vanish for orthogonal grids and the
     \pdiff{}{x}\left[\Gamma\pdiff{\sa}{x}\right] = \pdiff{\xi}{x}\pdiff{}{\xi}\left[
         \Gamma\pdiff{\sa}{\xi}\pdiff{\xi}{x}
     \right]
-    + 
+    +
     \pdiff{\eta}{x}\pdiff{}{\eta}\left[
         \Gamma\pdiff{\sa}{\eta}\pdiff{\eta}{x}
     \right]
-    + 
+    +
     \pdiff{\zeta}{x}\pdiff{}{\zeta}\left[
         \Gamma\pdiff{\sa}{\zeta}\pdiff{\zeta}{x}
-    \right].    
+    \right].
 \end{equation*}
 
 A flux-like discretization is then used to approximate the outer derivative with respect to curvilinear coordinates such that:
@@ -502,7 +502,7 @@ A flux-like discretization is then used to approximate the outer derivative with
         \left(
             \Gamma\pdiff{\sa}{\xi}\pdiff{\xi}{x}
         \right)_{i+\half,j,k}
-        - 
+        -
         \left(
             \Gamma\pdiff{\sa}{\xi}\pdiff{\xi}{x}
         \right)_{i-\half,j,k}
@@ -513,7 +513,7 @@ A flux-like discretization is then used to approximate the outer derivative with
         \left(
             \Gamma\pdiff{\sa}{\eta}\pdiff{\eta}{x}
         \right)_{i,j+\half,k}
-        - 
+        -
         \left(
             \Gamma\pdiff{\sa}{\eta}\pdiff{\eta}{x}
         \right)_{i,j-\half,k}
@@ -524,7 +524,7 @@ A flux-like discretization is then used to approximate the outer derivative with
         \left(
             \Gamma\pdiff{\sa}{\zeta}\pdiff{\zeta}{x}
         \right)_{i,j,k+\half}
-        - 
+        -
         \left(
             \Gamma\pdiff{\sa}{\zeta}\pdiff{\zeta}{x}
         \right)_{i,j,k-\half}
@@ -550,14 +550,14 @@ The last term to be discretized is the anti-diffusion, which can be expanded as 
 \end{equation*}
 Each derivative, which results in three terms when expressed in curvilinear coordinates, must then be squared. Similar to the diffusion term, products involving unequal directions are neglected, resulting in:
 \begin{align*}
-    \left(\nabla \sa\right)^2 &= 
+    \left(\nabla \sa\right)^2 &=
     \left(\pdiff{\sa}{\xi}\right)_{i,j,k}\left[
         \left(\pdiff{\xi}{x}\right)^2
         + \left(\pdiff{\xi}{y}\right)^2
         + \left(\pdiff{\xi}{z}\right)^2
     \right]_{i,j,k}
     \\
-    &+ 
+    &+
         \left(\pdiff{\sa}{\eta}\right)_{i,j,k}\left[
         \left(\pdiff{\eta}{x}\right)^2
         + \left(\pdiff{\eta}{y}\right)^2
@@ -603,9 +603,9 @@ where the flow direction is determined by the sign of $\vec{u}\cdot\vec{n}$ at t
 
 \subsection{Wall distance calculation}
 \label{sec:synwalldist}
-Syn3D can calculate wall distances either through the brute force approach or the Poisson approach detailed in~\Cref{sec:walldist}. With the brute force approach, distances between each cell center and the nearest face center is calculated. As mentioned in~\Cref{sec:walldist}, this can be a source of error. However, structured meshes are typically constructed in such a way that grid lines are orthogonal to solid wall boundaries, in which case the error vanishes. 
+Syn3D can calculate wall distances either through the brute force approach or the Poisson approach detailed in~\Cref{sec:walldist}. With the brute force approach, distances between each cell center and the nearest face center is calculated. As mentioned in~\Cref{sec:walldist}, this can be a source of error. However, structured meshes are typically constructed in such a way that grid lines are orthogonal to solid wall boundaries, in which case the error vanishes.
 
-The Poisson equation (\Cref{eq:poissondist}) is solved using the Galerkin method, which belongs to the class of finite element techniques. A detailed discussion on using the Galerkin method for solving PDEs can be found in~\cite{reddy2006introduction} and only an overview is given here. 
+The Poisson equation (\Cref{eq:poissondist}) is solved using the Galerkin method, which belongs to the class of finite element techniques. A detailed discussion on using the Galerkin method for solving PDEs can be found in~\cite{reddy2006introduction} and only an overview is given here.
 
 The first step is to rewrite the Poisson equation in the following weak form:
 \begin{equation*}
@@ -616,4 +616,4 @@ The first step is to rewrite the Poisson equation in the following weak form:
         (\vec{n}\cdot\nabla\phi)w
     \right]~dS,
 \end{equation*}
-where $w$ is a ``trial'' function. Since this particular problem only requires homogeneous Dirichlet conditions to be imposed, the second term vanishes. Linear Lagrange shape functions are used as basis functions for $\phi$ as well as $w$. Integrals are approximated using a two-point Gaussian quadrature. This scheme is second-order accurate and results in a linear equation, which is solved using the conjugate gradient method with an algebraic multigrid preconditioner. Finally, $d$ is computed at the cell centers by using the shape functions. 
+where $w$ is a ``trial'' function. Since this particular problem only requires homogeneous Dirichlet conditions to be imposed, the second term vanishes. Linear Lagrange shape functions are used as basis functions for $\phi$ as well as $w$. Integrals are approximated using a two-point Gaussian quadrature. This scheme is second-order accurate and results in a linear equation, which is solved using the conjugate gradient method with an algebraic multigrid preconditioner. Finally, $d$ is computed at the cell centers by using the shape functions.

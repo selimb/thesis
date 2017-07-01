@@ -17,7 +17,7 @@ The mesh structure is explained in~\Cref{sec:nxmesh}, an overview of the CVFE me
 %
 As opposed to syn3D, NX Flow solves the governing equations on a computational domain tessellated with unstructured grids of various element types.. This allows for greater flexibility in adapting the grid to arbitrarily complex domains. The grids are typically composed of hexahedrons and tetrahedrals, although pyramids and wedges are also often used as transition elements. Thus, significant bookkeeping is required in order to keep track of the connectivity compared to structured grids. The reader is referred to~\cite{blazek2015computational} for a more detailed discussion on unstructured grids.
 
-Another difference between syn3D and NX Flow is that the latter locates the field points at the vertices, not the element centroids, making it a vertex-centered, or cell-vertex, code. However, it still is a finite volume code, which raises the question of how the CVs are constructed. This is done by generating a so-called dual mesh, which is similar to the auxiliary CV construction in syn3D as described in~\Cref{sec:synns}. In two dimensions, as depicted in~\Cref{fig:dualmeshtwo}, a CV is constructed around a given vertex by looping over the edges containing the vertex and joining the midpoints of those edges to the face centers. Using finite volume terminology, these lines (one-dimensional surfaces) are referred to as \textit{integration surfaces}. It goes without saying that distinguishing between a control volume and an element is crucial. One speaks of a CV sector or element sector when referring to the portion of a CV contained in a single element. It can also be said that a given element is divided into $N$ sectors, where $N$ is the number of vertices, or nodes, this element is made up of. 
+Another difference between syn3D and NX Flow is that the latter locates the field points at the vertices, not the element centroids, making it a vertex-centered, or cell-vertex, code. However, it still is a finite volume code, which raises the question of how the CVs are constructed. This is done by generating a so-called dual mesh, which is similar to the auxiliary CV construction in syn3D as described in~\Cref{sec:synns}. In two dimensions, as depicted in~\Cref{fig:dualmeshtwo}, a CV is constructed around a given vertex by looping over the edges containing the vertex and joining the midpoints of those edges to the face centers. Using finite volume terminology, these lines (one-dimensional surfaces) are referred to as \textit{integration surfaces}. It goes without saying that distinguishing between a control volume and an element is crucial. One speaks of a CV sector or element sector when referring to the portion of a CV contained in a single element. It can also be said that a given element is divided into $N$ sectors, where $N$ is the number of vertices, or nodes, this element is made up of.
 \begin{figure}
     \centering
     \begin{tikzpicture}[scale=3.5]
@@ -65,7 +65,7 @@ It is then straightforward to obtain the shape function derivatives with respect
 \begin{equation*}
     \pdiff{\phi}{s_i} = \sum_n^N \pdiff{\shape_n}{s_i}\phi_n,
 \end{equation*}
-where $s_i$ represents the $i$-th component in the natural coordinate system. 
+where $s_i$ represents the $i$-th component in the natural coordinate system.
 
 Similarly to the generalized curvilinear coordinates, a transformation is necessary to calculate the shape function derivatives with respect to the global coordinates $x,y,z$. The position vector can be expressed as a function of the $s,t,u$ coordinates as:
 \begin{equation*}
@@ -73,7 +73,7 @@ Similarly to the generalized curvilinear coordinates, a transformation is necess
 \end{equation*}
 This leads to the following metric formulation:
 \begin{equation}
-    \left.\pdiff{\vec{x}}{s_j}\right|_{(s,t,u)} = 
+    \left.\pdiff{\vec{x}}{s_j}\right|_{(s,t,u)} =
         \sum_n^N \left(\left.\pdiff{\shape_n}{s_j}\right|_{(s,t,u)} \vec{x}_{n}\right).
 \end{equation}
 
@@ -89,20 +89,20 @@ The derivatives of $\phi$ with respect to the natural coordinates can be written
         \pdiff{\phi}{y} \\
         \pdiff{\phi}{z}
     \end{bmatrix}
-    = 
+    =
     \begin{bmatrix}
         \pdiff{\phi}{s} \\
         \pdiff{\phi}{t} \\
         \pdiff{\phi}{u}
     \end{bmatrix}.
 \end{equation*}
-This system can be numerically inverted using Kramer's rule. 
+This system can be numerically inverted using Kramer's rule.
 The derivative $\partial \phi/\partial x$ at an integration point in the element can then be written as:
 \begin{equation*}
     \left.\pdiff{\phi}{x_i}\right|_{ip} = \sum_n^N \left.\pdiff{\shape_n}{x_i}\right|_{ip}\phi_n.
 \end{equation*}
 It should be noted that the evaluation of $\phi$ and its derivative inside an element can be computed with second-order accuracy regardless of the shape of the element, which is a significant advantage of using this method -- the approximations in~\Cref{sec:syn3d} are at most second-order accurate, depending on the skewness and orthogonality of the grid.
- 
+
 
 \subsubsection{Compilation of the coefficients}
 The CVFE method uses the integral form of the equations as discussed in~\Cref{sec:fv}, and fluxes through the integration surfaces around a control volume must be evaluated. Due to the dual mesh configuration, the integration surfaces as well as the integration points lie completely inside the elements. The surface integrals can then be calculated element-wise and accumulated to each control volume appropriately. The surface integrals are then guaranteed to be conservative. Moreover, because of the way the shape functions are constructed, the value of the flux at a given integration point depends on the field variables at all nodes in that element, regardless of whether the integration point belongs to their control volume. In other words, the stencil involved in the computation of a flux always includes all the vertices of the element in which the flux is computed.
@@ -117,12 +117,12 @@ NX Flow employs the collocated variables approach, i.e. pressure and velocity ar
 
 \subsection{Discretization of the governing equations}
 \label{sec:nxnum}
-This section describes the numerical discretization of the terms in the mass, momentum, energy and turbulence equations. 
+This section describes the numerical discretization of the terms in the mass, momentum, energy and turbulence equations.
 
-NX Flow being a commercial code, offers a wide variety of options to its users. For the sake of conciseness, only the options used to solve the problems in this work are described. 
+NX Flow being a commercial code, offers a wide variety of options to its users. For the sake of conciseness, only the options used to solve the problems in this work are described.
 
 \subsubsection{Temporal discretization}
-NX Flow uses the fully-implicit first-order backward Euler approach to discretize the time derivative of all partial differential equations. It solves the mass and momentum equations together, which yields an updated pressure and velocity field. 
+NX Flow uses the fully-implicit first-order backward Euler approach to discretize the time derivative of all partial differential equations. It solves the mass and momentum equations together, which yields an updated pressure and velocity field.
 
 %In the case of the conservation laws, this leads to a coupled system of five equations for each control volume:
 %\begin{equation*}
@@ -130,7 +130,7 @@ NX Flow uses the fully-implicit first-order backward Euler approach to discretiz
 %        \frac{V}{\Delta t^n} - \pdiff{\vec{R}^n}{\vec{W}}
 %    \right] \Delta \vec{W}^n = \vec{R}^n
 %\end{equation*}
-%where $\vec{W}$ is defined in~\Cref{eq:wstate}. 
+%where $\vec{W}$ is defined in~\Cref{eq:wstate}.
 
 The turbulence and energy equations are not coupled with the mass and momentum equations; they are solved separately in a segregated manner. The linear systems are solved using an iterative solver such as GMRES.
 
@@ -172,7 +172,7 @@ NX Flow was unfortunately not developed with external flows in mind and does not
     \item Opening
     \item Symmetry plane
 \end{itemize}
-Treatment of boundary conditions in a vertex-centered code is quite different from that of a cell-centered code since some field points may lie on the boundary, as depicted in~\Cref{fig:cvfebc}. Such points have integration surfaces corresponding to segments of the boundary. It should be noted that evaluation of fluxes over the domain then requires two loops: one over the elements and the interior integration surfaces as well as one over the boundary integration surfaces. 
+Treatment of boundary conditions in a vertex-centered code is quite different from that of a cell-centered code since some field points may lie on the boundary, as depicted in~\Cref{fig:cvfebc}. Such points have integration surfaces corresponding to segments of the boundary. It should be noted that evaluation of fluxes over the domain then requires two loops: one over the elements and the interior integration surfaces as well as one over the boundary integration surfaces.
 \begin{figure}
     \centering
     \begin{tikzpicture}[scale=5.0]
@@ -182,7 +182,7 @@ Treatment of boundary conditions in a vertex-centered code is quite different fr
     \label{fig:cvfebc}
 \end{figure}
 
-Symmetry planes require that there be no flux through the boundary. The implementation of such a boundary condition simply requires not calculating any fluxes through the boundary integration surfaces. 
+Symmetry planes require that there be no flux through the boundary. The implementation of such a boundary condition simply requires not calculating any fluxes through the boundary integration surfaces.
 
 In an inlet BC, the user specifies values for velocity and its direction as well as pressure, temperature and turbulence quantities. Since the integration point is on the boundary, convective and diffusive fluxes can be calculated using the user-specified values as the $ip$ values, i.e. no interpolation is required. The gradients are calculated using the shape function derivatives, except that the node values are replaced with the integration point values for nodes on the boundary. The gradient of $\phi$ at a boundary integration point $ip,b$ can then be expressed as a sum over the interior nodes, the ones not on a boundary, and boundary nodes:
 \begin{equation*}
@@ -195,8 +195,8 @@ In an inlet BC, the user specifies values for velocity and its direction as well
 
 Opening BCs specify pressure, temperature and turbulence quantities. The velocity at boundary integration points is obtained by shape function interpolation, which determines whether the opening is an inflow or outflow. The advection term requires no special treatment. On the other hand, the diffusion flux is only calculated if the flow is outgoing. All openings used in this work should be treated as outflows.
 
-Viscous wall boundary conditions can be implemented strongly by directly imposing prescribed values at the nodes (Dirichlet) or weakly by instead imposing a condition on the flux through specification of $\phi_{ip,b}$. A detailed discussion can be found in~\cite{nordstrom2012weak}. This BC is currently implemented weakly for the mass and momentum and strongly for the turbulence equations. 
+Viscous wall boundary conditions can be implemented strongly by directly imposing prescribed values at the nodes (Dirichlet) or weakly by instead imposing a condition on the flux through specification of $\phi_{ip,b}$. A detailed discussion can be found in~\cite{nordstrom2012weak}. This BC is currently implemented weakly for the mass and momentum and strongly for the turbulence equations.
 
 \subsection{Wall distance calculation}
 \label{sec:nxwalldist}
-NX Flow also offers both the brute force approach and Poisson approach to calculate the wall distance. The brute force approach finds the nearest node for every field point, and the Poisson equation is solved with the finite volume method, exactly like the Navier-Stokes equations. 
+NX Flow also offers both the brute force approach and Poisson approach to calculate the wall distance. The brute force approach finds the nearest node for every field point, and the Poisson equation is solved with the finite volume method, exactly like the Navier-Stokes equations.
