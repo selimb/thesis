@@ -1,0 +1,29 @@
+\begin{tikzpicture}[scale=1.5]
+  \pgfmathsetmacro{\dx}{3}
+  \pgfmathsetmacro{\dy}{2}
+  \pgfmathsetmacro{\dz}{1.5}
+  \draw[thick](\dx,\dy,0)--(0,\dy,0)--(0,\dy,\dz)--(\dx,\dy,\dz)--(\dx,\dy,0)--(\dx,0,0)--(\dx,0,\dz)--(0,0,\dz)--(0,\dy,\dz);
+  \draw[thick](\dx,\dy,\dz)--(\dx,0,\dz);
+  \draw[gray](\dx,0,0)--(0,0,0)--(0,\dy,0);
+  \draw[gray](0,0,0)--(0,0,\dz);
+  \draw[fill] (\dx*0.5, \dy*0.5, \dz*0.5) circle [radius=\dx*0.02] node [above] {$P$};
+  \draw[->,thick] (0.5*\dx,0.5*\dy,\dz)
+    %node {$\times$} 
+    -- (0.5*\dx,0.5*\dy,\dz+1) node [below] {$\vec{n}_1$};
+  \draw[->,thick] (\dx,0.5*\dy,0.5*\dz) 
+    %node {$\times$} 
+    -- (\dx+0.8,0.5*\dy,0.5*\dz) node [right] {$\vec{n}_2$};
+  \draw[->,thick] (0.5*\dx,\dy,0.5*\dz) 
+    %node {$\times$} 
+    -- (0.5*\dx,\dy+0.8,0.5*\dz) node [above] {$\vec{n}_3$};
+  %\node at (0.5*\dx, 0.5*\dy, 0.0) {$\times$};
+  %\node at (0.0, 0.5*\dy, 0.5*\dz) {$\times$};
+  %\node at (0.5*\dx, 0.0, 0.5*\dz) {$\times$};
+  % \draw[
+  %\node [align=left] at (0.0, -\dy*0.3, \dz) {
+    %\begin{tabular}{cl}
+   % $\times$ & Integration point\\
+    %\tikz\draw[fill] circle (0.5ex); & Field point
+    %\end{tabular}  
+%};
+\end{tikzpicture}

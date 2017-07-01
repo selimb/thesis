@@ -1,0 +1,215 @@
+\section{Two-dimensional bump-in-channel}
+Upon completion of the validation of the flow over a flat-plate, the turbulent flow on a two-dimensional bump-in-channel case was investigated. This case is also available on~\cite{tmr} under the name ``2D Bump-in-channel''. This case was only run with syn3D.
+
+The problem domain and flow conditions are shown in~\Cref{fig:2dbump}. It is referred to as two-dimensional due to the shape of the bump not depending upon the $z$ coordinate, as opposed to the three-dimensional bump in~\Cref{sec:syn3dbump}. 
+
+This case is different from the previous flat plate case because it involves wall curvature, which induces a pressure gradient. The TMR website also provides five grids for this case. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figs/2dbump/bumpBCpic.jpg}
+    \caption{Turbulent two-dimensional bump case~\cite{tmr}.}
+    \label{fig:2dbump}
+\end{figure}
+
+\begin{table}[ht!]
+    \centering
+    \caption{2D Bump (syn3D): Comparison of force coefficients for the finest two-dimensional bump.}
+\label{tab:syn2dbump1}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Solver & $C_L$ & $C_D$ & $C_{Dv}$ & $C_{Dp}$ \\  
+\midrule
+CFL3D & 0.0249 & 0.0036  & 0.0032 & 0.0004  \\ 
+syn3D & 0.0251 &  0.0035 & 0.0031 & 0.0004  \\  \bottomrule
+\end{tabular}
+
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\caption{2D Bump (syn3D): Comparison of skin friction coefficient at various locations.}
+\label{tab:syn2dbump2}
+\begin{tabular}{lccc}
+\toprule
+& \multicolumn{3}{c}{$C_f$} \\
+\cline{2-4}
+Solver & $x=0.75$ & $x=0.6321975$ & $x=0.8678025$ \\  
+\midrule
+CFL3D & 0.00615 & 0.00519  & 0.002680   \\
+syn3D & 0.00610 & 0.00519  & 0.002835  \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+\Cref{tab:syn2dbump1} tabulates the drag coefficient, the lift coefficient $C_L$ as well as the contributors to the drag coefficient $C_{Dv}$ and $C_{Dp}$, which represent the contributions due to viscous forces and pressure forces respectively. \Cref{tab:syn2dbump2} tabulates the skin friction coefficient probed at various locations. \Cref{fig:syn2dbumpcnvstudy} shows the convergence for all grids. Reduction of the residual is quite slow for this particular problem, with the finest grid taking over 3 days on 64 processors to complete.
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/convergenceRho.pdf}
+  %\caption{Maximum density residual}
+\end{subfigure}%
+%\begin{subfigure}{.45\textwidth}
+%  \centering
+%  \includegraphics[width=1.0\textwidth]{figs/2dbump/convergencesa.pdf}
+%  \caption{Maximum turbulence variable residual.}
+%\end{subfigure}
+\caption{2D Bump (syn3D): Convergence of maximum density residual on various grid sizes.}
+\label{fig:syn2dbumpcnvstudy}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+	\includegraphics[width=0.7\textwidth]{figs/2dbump/CoefficientFriction.pdf}
+    \caption{2D Bump (syn3D): Coefficient of skin friction distribution along the bump.}
+    \label{fig:syn2dbumpcf}
+\end{figure}
+
+
+\begin{figure}[ht!]
+\centering
+	\includegraphics[width=0.7\textwidth]{figs/2dbump/CoefficientPressure.pdf}
+    \caption{2D Bump (syn3D): Coefficient of pressure distribution along the bump.}
+    \label{fig:syn2dbumpcp}
+\end{figure}
+
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/MutNASA.jpg}
+  \caption{CFL3D}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/RevContour2.png}
+  \caption{syn3D}
+\end{subfigure}
+\caption{2D Bump (syn3D): Contours of $\mu_T/\mu_{\infty}$.}
+\label{fig:syn2dbumpmutcontour}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/revBL.pdf}
+  \caption{Profile at $x=0.75$}
+  \label{fig:syn2dbumpmutprof}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/maxRev.pdf}
+  \caption{Maximum value in the boundary layer.}
+  \label{fig:syn2dbumpmaxmut}
+\end{subfigure}
+\caption{2D Bump (syn3D): Dimensionless eddy viscosity profiles.}
+\label{fig:syn2dbumpmut}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/u75.pdf}
+  \caption{$x=0.75$}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/u120148.pdf}
+  \caption{$x=1.20148$}
+\end{subfigure}
+\caption{2D Bump (syn3D): Dimensionless velocity profiles $U/U_\infty$.}
+\label{fig:syn2dbumpu}
+\end{figure}
+
+\Cref{fig:syn2dbumpcf} shows the $C_f$ distribution over the bump for the finest grid. The skin friction coefficient can be seen to start high, slowly decrease in the flat portion and then increase on the bump as it accelerates. 
+
+\Cref{fig:syn2dbumpcp} shows the $C_p$ distribution. The trend in this plot is similar to the skin friction plot. The pressure decreases as the flow accelerates at the leading edge of the bump. The pressure then increases again once the peak is reached. 
+
+\Cref{fig:syn2dbumpmutcontour} compares the contour of eddy viscosity over the bump and \Cref{fig:syn2dbumpmut} compares the eddy viscosity through line plots. Similar to the flat plate, $\mu_t$ increases with $x$. In, \Cref{fig:syn2dbumpmutprof}, it can again be seen that the eddy viscosity increases with $y$ until it reaches a maximum value and begins to decrease again as it reaches the far-field region.
+These plots show decent agreement between CFL3D and syn3D and the spike in eddy viscosity can be seen at the leading edge of the solid wall in~\Cref{fig:syn2dbumpmaxmut}. 
+
+\Cref{fig:syn2dbumpu} compares the velocity profile. A sharp velocity gradient near the wall is observed at both locations, although the height of the boundary layer is greater as $x$ increases. 
+\begin{figure}[ht!]
+\centering
+  \includegraphics[width=0.7\textwidth]{figs/2dbump/CfGridStudy.pdf}
+    \caption{2D Bump (syn3D): Coefficient of skin friction along the bump for various grids.}
+    \label{fig:syn2dbumpcfstudy}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+  \includegraphics[width=0.7\textwidth]{figs/2dbump/CpGridStudy.pdf}
+    \caption{2D Bump (syn3D): Coefficient of pressure along the bump for various grid.}
+    \label{fig:syn2dbumpcpstudy}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/revBLGridStudy.pdf}
+  \caption{Profile at $x=0.75$.}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/maxRevstudy.pdf}
+  \caption{Maximum value in the boundary layer.}
+\end{subfigure}
+\caption{2D Bump (syn3D): Dimensionless eddy viscosity profiles on the bump for various grids.}
+\label{fig:syn2dbumpmutstudy}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/C_LGridStudy.pdf}
+  \caption{Lift coefficient.}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/C_DGridStudy.pdf}
+  \caption{Drag coefficient.}
+\end{subfigure}
+\\
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/C_DpGridStudy.pdf}
+  \caption{Pressure contribution to drag.}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/C_DvGridStudy.pdf}
+  \caption{Viscous contribution to drag.}
+\end{subfigure}
+\caption{2D Bump (syn3D): Force coefficients for various grid sizes.}
+\label{fig:syn2dbumpforcestudy}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/Cf075GridStudy.pdf}
+  \caption{$C_f$ grid study where x=0.75}
+\end{subfigure}%
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/Cf06321975GridStudy.pdf}
+  \caption{$C_f$ grid study where x=0.6321975}
+\end{subfigure}
+\\
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figs/2dbump/Cf08678025GridStudy.pdf}
+  \caption{$C_f$ grid study where x=0.8678025}
+\end{subfigure}%}
+\caption{2D Bump (syn3D): Skin friction coefficient at specific locations for various grid sizes.}
+\label{fig:syn2dbumpcflocstudy}
+\end{figure}
+
+\Cref{fig:syn2dbumpcfstudy,fig:syn2dbumpcpstudy} show $C_f$ and $C_p$ distributions along the bump for all grids and \Cref{fig:syn2dbumpmutstudy} compares the eddy viscosity distribution between grids. \Cref{fig:syn2dbumpforcestudy,fig:syn2dbumpcflocstudy} show the convergence of force coefficients and skin friction for various grid sizes, compared with results from CFL3D and FUN3D. Again, it can be seen that there is much more dependence on grid size for syn3D as compared to the NASA solvers, although most values are very similar on the finest grid. 

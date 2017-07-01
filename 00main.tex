@@ -1,0 +1,53 @@
+\documentclass[12pt,letterpaper,titlepage]{report}
+%\documentclass[12pt,letterpaper,titlepage,draft,oneside]{book}
+%\pagestyle{plain}
+
+\input{00packagesandsettings}
+\input{commands}
+
+\begin{document}
+
+% Title page
+\singlespacing
+\input{titlepage}
+
+% Abstract and acknowledgements
+% Double spaced with roman numerals
+\doublespacing
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{0abstract}
+\clearpage
+\input{0acknowledgements}
+\clearpage
+
+% ToC, LoF, LoT
+\pagenumbering{gobble} % Remove number off contents table
+\singlespacing
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+\clearpage
+\pdfbookmark{List of Figures}{}
+\listoffigures
+\clearpage
+\pdfbookmark{List of Tables}{}
+\listoftables
+\clearpage
+
+\pagenumbering{arabic} %
+
+\doublespacing
+
+\input{introduction}
+\input{flow}
+\input{implementation}
+\input{results}
+\input{conclusion}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\bibliographystyle{acm}
+\bibliography{references}
+
+\end{document}

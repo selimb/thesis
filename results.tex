@@ -1,0 +1,23 @@
+\chapter{Results}
+\label{chap:results}
+This chapter assesses the computational implementation accomplished by the author. The aim is to determine if the programming and computational implementation of the model is correct. The implementation in syn3D and NX Flow are validated on the following cases:
+\begin{itemize}
+    \item Flat plate (syn3D \& NX Flow)
+    \item Two-dimensional bump (syn3D)
+    \item Three-dimensional bump (syn3D)
+    \item NACA 0012 (NX Flow)
+    \item RAE 2822 (syn3D \& NX Flow)
+    \item High-lift configuration 30P30N (syn3D)
+\end{itemize}
+The first four cases are taken from the Turbulence Modeling Resource (TMR)~\cite{tmr}, which provides a set of grids as well as results from established CFD codes, namely CFL3D and FUN3D, which are developed at NASA. 
+
+It should be noted that the difference in results using either wall distance methods (brute force and Poisson) was negligible and a comparison between the results obtained with the two methods is not shown.
+\input{resultsflat}
+\input{syn2dbump}
+\input{syn3dbump}
+\input{naca0012}
+\input{rae}
+\input{highlift}
+
+%\input{resultssyn}
+%\input{resultsnx}

@@ -1,0 +1,34 @@
+\newcommand{\pdiff}[2]{\ensuremath{
+    \frac{\partial #1}{\partial #2}
+}}
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+\newcommand{\Dphi}[1]{\ensuremath{
+    \pdiff{(\rho #1)}{t} 
+        + \nabla \cdot (\rho #1 \vec{u})
+}}
+
+\newcommand\Rey{\mbox{\textit{Re}}}  % Reynolds number
+\newcommand\Pran{\mbox{\textit{Pr}}} % Prandtl number, cf TeX's \Pr product
+\newcommand\Pen{\mbox{\textit{Pe}}}  % Peclet number
+
+\newcommand{\ravg}[1]{\overline{#1}}
+\newcommand{\favg}[1]{\widetilde{#1}}
+
+\newcommand{\sa}{\hat{\nu}}
+
+\newcommand{\vol}{\Omega}
+\newcommand{\surf}{\partial \Omega}
+\newcommand{\order}{\mathcal{O}}
+
+\newcommand{\ndim}{\sqrt{\gamma}\frac{M_\infty}{\Rey}}
+
+\newcommand{\half}{\frac{1}{2}}
+
+\def\Plus{\texttt{+}}
+\def\Minus{\texttt{-}}
+
+\newcommand{\shape}{\Psi}
+
+\newcommand{\degc}{\ensuremath{^\circ}}

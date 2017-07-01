@@ -1,0 +1,54 @@
+% http://texample.net/tikz/examples/polar-plot/
+% https://tex.stackexchange.com/questions/330580/drawing-a-semicircle-in-tikz
+% https://tex.stackexchange.com/questions/66216/draw-arc-in-tikz-when-center-of-circle-is-specified
+
+
+% Computational
+\def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
+    { \draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5); }
+    
+\foreach \rad in {2,2.5,...,4} {
+    \centerarc[](0,0)(90:180:\rad);
+}
+\foreach \ang in {0,...,7} {
+    \draw (\ang*90/7 + 90:2) -- (\ang*90/7 + 90: 4);
+}
+\node[below] at (180:3) {A};
+\node[below right] at (135:2) {B};
+\node[right] at (90:3) {C};
+\node[above left] at (135:4) {D};
+
+% CSYS
+\draw [thick, <->] (0,0.5) node [left] {$y$}
+-- (0,0) -- (0.5,0) node [below right] {$x$};
+
+
+\draw [very thick, ->] (1, 2) -- (2, 2);
+
+\def\xin{3}
+\def\xf{6.5}
+\def\yin{0.5}
+\def\yf{4}
+\def\ni{7}
+\def\nj{4}
+\pgfmathsetmacro{\ys}{(\yf - \yin)/(\nj)}
+\pgfmathsetmacro{\xs}{(\xf - \xin)/(\ni)}
+\foreach \y in {0,...,\nj} {
+    \draw (\xin,\y*\ys + \yin) -- (\xf,\y*\ys + \yin);
+}
+\foreach \x in {0,...,\ni} {
+    \draw (\x*\xs + \xin,\yin) -- (\x*\xs + \xin,\yf);
+}
+\node[left]  at (\xin,0.5*\yf + 0.5*\yin) {A};
+\node[right] at (\xf, 0.5*\yf + 0.5*\yin) {C};
+\node[below] at (0.5*\xf + 0.5*\xin,\yin) {B};
+\node[above] at (0.5*\xf + 0.5*\xin, \yf) {D};
+
+\draw[very thick] (\xin,\yin-0.1) -- (\xin,\yin-0.4) node [below] {\footnotesize $\text{i}=1$};
+\draw[very thick] (\xf,\yin-0.1) -- (\xf,\yin-0.4) node [below] {\footnotesize ~~~~$\text{i}= \text{i}_{\text{max}}$};
+
+\draw[very thick] (\xf+0.1,\yin) -- (\xf+0.4,\yin) node [right] {\footnotesize $\text{j}=1$};
+\draw[very thick] (\xf+0.1,\yf) -- (\xf+0.4,\yf) node [right] {\footnotesize $\text{j}= \text{j}_{\text{max}}$};
+
+\draw[thick, <->] (9,0.5) node [left] {$\eta$}
+    -- (9,0) -- (9.5,0) node [below right] {$\xi$};

@@ -1,0 +1,11 @@
+\chapter{Numerical Methods and Implementation}
+\label{chap:num}
+%The governing equations having been derived in~\Cref{chap:governing}, the next step is to choose a suitable \textit{discretization method}, which approximates these differential equations into a system of algebraic equations.
+In this chapter the discretization methods which approximate the differential equations established in Chapter 2 are presented. 
+The discretization methods used in both NX Flow and syn3D is the finite volume (FV) method, which is described in~\Cref{sec:fv} in a general sense. Methods of calculating the wall distance are discussed in~\Cref{sec:walldist}. \Cref{sec:syn3d,sec:nxflow} discuss the specifics of the implementation and chosen numerical schemes for syn3D and NX Flow respectively. 
+%
+%
+\input{finitevolume}
+\input{walldist}
+\input{syn3d}
+\input{nxflow}
