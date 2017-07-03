@@ -2,7 +2,7 @@
 \label{chap:governing}
 This chapter introduces the  equations governing fluid flow.
 These are shown in their compressible form in \Cref{sec:ns} and
-a brief introduction to turbulence modelling is given in \Cref{sec:turb}.
+the turbulence model is given in~\Cref{sec:turb}.
 \section{Conservation laws}
 \label{sec:ns}
 The dynamical behavior of any fluid is determined by the following physical conservation laws~\cite{blazek2015computational}:
@@ -205,55 +205,14 @@ Finally, any problem definition in CFD requires specification of conditions at b
 \section{Turbulence modelling}
 \label{sec:turb}
 %
-\Cref{sec:ns} introduced the governing equations of the time-dependent three-dimensional fluid flow of a compressible Newtonian fluid. In theory, this set of equations can be solved numerically, provided initial and boundary conditions. This is what is called Direct Numerical Simulation (DNS). DNS for turbulent flows requires that all turbulent effects, which occur at very small temporal and spatial scales, be resolved. Consequently, DNS demands an equally small mesh spacing as well as a small time step size. The smaller the mesh spacing and time step, the more costly the computation, making DNS near impossible even on modern supercomputers.
-%
-\subsection{Random nature of turbulence}
-%
-The Reynolds number $\Rey$ is a dimensionless quantity commonly used to characterize fluid flows and is mathematically expressed as:
-\begin{equation*}
-    \Rey = \frac{\rho U l}{\mu},
-\end{equation*}
-where $l$ is a characteristic length and $U$ the velocity. The Reynolds number is a measure of the ratio of inertial forces to viscous forces. At low Reynolds numbers, fluid particles may follow relatively straight lines and minimal mixing occurs. For instance, a flow composed of a heterogeneous mixture may remain heterogeneous. This flow regime is referred to as laminar flow.
-
-On the other hand, flow at high Reynolds numbers is rather chaotic and random. Fluid particles no longer follow straight lines and mixing is significantly increased. A heterogeneous mixture will quickly become homogeneous if it can. Flow properties such as velocity vary randomly in time and space, even if boundary conditions are constant. This regime is called turbulent flow. It also happens that many flows in engineering are turbulent~\cite{versteeg2007introduction}, as are all cases mentioned in the present work.
-
-Turbulent flows are easily identifiable by the presence of vortices, or eddies, in the flow. Such a phenomenon was observed and documented as far back as the 15th century, by none other than Leonardo Da Vinci. \Cref{fig:vinci} depicts his studies of vortices in turbulent fluid motion. The lower drawing in this figure shows the formation of eddies of various sizes that is typical of turbulent flows. These eddies typically manifest themselves in the vicinity of velocity gradients, such as in free shear flows or near solid boundaries. The physical reason for which DNS is so costly is that it must resolve the production and decay of eddies in order to accurately simulate the flow.
-
-The number of mesh points $N$ required to resolve turbulent effects can be related to the Reynolds number by~\cite{wilcox1998turbulence}:
-\begin{equation*}
-    N = \Rey^{2.25}.
-\end{equation*}
-Hence, memory storage requirements and CPU time grow significantly with the Reynolds number. In addition, the time step size must be reduced such that a fluid particle moves only a fraction of the mesh spacing. Thus, computational costs involved in DNS are too large for even simple problems in the turbulent regime.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.3\textwidth]{figs/vinci}
-    \caption{Studies of vortices in turbulent fluid motion by Leonardo da Vinci~\cite{wiki:vinci}.}
-    \label{fig:vinci}
-\end{figure}
-
-Readers are referred to~\cite{pope2001turbulent,wilcox1998turbulence} for a more thorough discussion of turbulence.
+\Cref{sec:ns} introduced the governing equations of the time-dependent three-dimensional fluid flow of a compressible Newtonian fluid. As mentioned in~\Cref{sec:random}, solving these equations directly is nearly impossible in practice. Instead, syn3D and NX Flow solve the Favre-averaged Navier-Stokes equations, which are detailed in the following sections along with the Spalart-Allmaras turbulence model.
 %
 \subsection{Favre-averaged Navier-Stokes equations}
+\label{sec:fans}
 %
-For most engineering purposes it is unnecessary to resolve every detail of the turbulent fluctuations. In other words, merely solving for the so-called mean flow would be satisfactory. This would require a set of equations that is only concerned with the mean quantities of the flow. The most common, and probably simplest, way to obtain the mean flow equations is to write all conserved quantities appearing in the conservation equations as a sum of a fluctuating component and a mean component. Taking for instance an instantaneous conserved quantity $\phi$, one can write:
-\begin{align*}
-    \phi &= \ravg{\phi} + \phi'\\
-    \ravg{\phi} &= \frac{1}{\text{T}} \int_{\text{T}}\phi(t)
-        ~\text{d}t,
-\end{align*}
-where $\ravg{\phi}$ is the mean component, $\phi'$ is the fluctuating component, and $\text{T}$ is a time interval longer than the characteristic time scale of the turbulence. The mean component is then a time-averaged value, which is only relevant in statistically stationary (steady) flows. This work is only concerned with such flows. This technique is called a Reynolds decomposition.
+As presented in~\Cref{sec:introrans}, the Favre-averaged Navier-Stokes equations are obtained by substituting a Favre decomposition for the flow variables and averaging the equations in time. The resulting equations are detailed below.
 
-To allow for compressibility effects, a mass weighted average must also be introduced. The Favre decomposition is defined as:
-\begin{align*}
-    \phi &= \favg{\phi} + \phi'' \\
-    \favg{\phi} &= \frac{\overline{\rho\phi}}{\overline{\rho}}.
-\end{align*}
-It is important to note that $\ravg{\phi'} = 0$ but $\ravg{\phi''} \ne 0$.
-
-In order to obtain a set of mean governing equations, a Reynolds decomposition for pressure and density and a Favre decomposition for velocity, internal energy and temperature is taken and substituted into the original (instantaneous) equation. Next, a time average of the resulting equations is taken.
-
-It should be noted that the simpler Reynolds-averaged Navier-Stokes equations also exist but assume incompressible flow. Since the Favre-averaged equations are more general in that they do not rely on this assumption, as shown below.
+% It should be noted that the simpler Reynolds-averaged Navier-Stokes equations also exist but assume incompressible flow. Since the Favre-averaged equations are more general in that they do not rely on this assumption, as shown below.
 %
 \subsubsection{Conservation of mass}
 %
@@ -293,7 +252,8 @@ Moreover, the turbulent kinetic energy $K$ is defined as the sum of the normal s
     \right]
 \end{equation*}
 
-Because the Reynolds stress tensor is symmetric, this adds a total of six unknowns to the three-dimensional momentum equations, leading to the \textit{turbulence closure problem}. In other words, the Favre-averaged, as well as Reynolds-averaged, conservation laws cannot be solved unless the Reynolds stresses are determined. A common solution to this problem is given in~\Cref{sec:bouss}.
+Because the Reynolds stress tensor is symmetric, this adds a total of six unknowns to the three-dimensional momentum equations, leading to the \textit{turbulence closure problem}. In other words, the Favre-averaged, as well as Reynolds-averaged, conservation laws cannot be solved unless the Reynolds stresses are determined. 
+% A common solution to this problem is given in~\Cref{sec:bouss}.
 %
 \subsubsection{Conservation of energy}
 %
@@ -321,13 +281,14 @@ Moreover, the total energy and total enthalpy can be expressed as:
 An investigation of~\Cref{eq:renergy} reveals two additional terms as compared to~\Cref{eq:energy}. These are the last two terms on the right-hand side, and represent the work done by Reynolds stresses and turbulent transport of heat, respectively. In contrast, the first two terms on the right-hand side represent the work done by viscous stresses and diffusion of heat.
 
 Averaging of the conservation of energy equation adds another three unknowns to the system, these are the components of the heat-flux vector $\ravg{\rho \vec{u}'' h''}$.
+%
 \subsection{Approximations to turbulent terms}
 %
 \label{sec:bouss}
 The temporal averaging process detailed in the previous subsection introduces new terms to the system of equations. The challenge, which
 has yet to be completely overcome even today, is to correctly
 \textit{model} the additional turbulent terms $\tau^T$ and
-$\ravg{\rho \vec{u}'' h''}$. This is done through a turbulence model.
+$\ravg{\rho \vec{u}'' h''}$. 
 
 In 1877, Boussinesq observed that the momentum transfer in a turbulent flow is dominated by the mixing caused by large energetic turbulent eddies~\cite{blazek2015computational}. The Boussinesq approximation then states that the turbulent stress is proportional to the mean strain rate, where the proportionality factor is the so-called eddy viscosity $\mu_T$. This can be written as:
 \begin{equation}
@@ -373,31 +334,6 @@ It is then possible to rewrite the Favre-averaged Navier-Stokes equations, notin
 \end{align}
 Thus, only the specification of the eddy viscosity is needed in order to solve the Favre-averaged Navier-Stokes equations. It is crucial to remember that the eddy viscosity does not exist, it is nothing but a convenient mathematical invention whose purpose is to \emph{model} the production and decay of eddies in the flow.
 %
-\subsection{Law of the wall}
-%
-The total shear stress is the sum of viscous and Reynolds stresses. The Reynolds stresses being null at a wall, since $\vec{u} = 0$, the total shear stress at the wall $\tau_w$ is due entirely to the viscous contribution. It was found through experimentation and simulation that the Reynolds stresses tend to dominate as one moves away from the wall~\cite{pope2001turbulent}. In fact, the relative importance of both sources of stress can be determined through a non-dimensional wall distance $y^+$ defined by:
-\begin{equation*}
-    y^+ = \frac{u_\tau d}{\nu},
-\end{equation*}
-where $d$ is the distance to the nearest wall and $u_\tau$ is the friction velocity defined as:
-\begin{equation*}
-    u_\tau = \sqrt{\frac{\tau_w}\rho}.
-\end{equation*}.
-It is possible to identify the following layers in the near-wall flow based on the $y^+$ value:
-\begin{description}
-    \item[Viscous sublayer] ($y^+ < 5$): Viscous stresses dominate
-    \item[Buffer layer] ($5 < y^+ < 30$): Neither stress dominates
-    \item[Log-law layer] ($y^+ > 30$): Turbulent stresses dominate
-\end{description}
-Another quantity of interest is the non-dimensional velocity $u^+ = U/u_\tau$ where $U$ is the velocity parallel to the wall, which can be related to $y^+$ through a function $f_w(y^+)$. For fully turbulent flows, the function $f_w$ has been found to be universal and to vary depending on the layer as follows:
-\begin{description}
-    \item[Viscous sublayer]: $u^+ = y^+$
-    \item[Log-law layer]: $u^+ = \frac{1}{\kappa} \ln y^+ + C^+$
-\end{description}
-where $\kappa \approx 0.41 $ is the Von Kármán constant and $C^+\approx5.0$ for a smooth wall~\cite{pope2001turbulent}. There is no clear relationship between $u^+$ and $y^+$ in the buffer layer, as the contributions to the shear stress are mixed.
-
-In CFD packages that solve the averaged equations, it is recommended to have at least a few points within the viscous sublayer in order to resolve the flow correctly. Thus, in practice, the computation of $y^+$ is useful in determining whether the mesh requires refinement.
-%
 \subsection{Spalart-Allmaras model}
 \label{sec:sa}
 The Spalart-Allmaras model adds one partial differential equation for an artificial variable called the \textit{modified eddy viscosity}, identified by $\sa$. It is related to the eddy viscosity through a simple algebraic equation:
@@ -421,19 +357,23 @@ The modified eddy viscosity is governed by the following transport equation:
         + \frac{c_{b2}}{\sigma}\left(\nabla \sa\right)^2
         \label{eq:sa},
 \end{equation}
-where $d$ is the distance to the nearest solid wall. Additional definitions are given by:
+where $d$ is the distance to the nearest solid wall. This is the standard form of the SA model~\cite{tmrsa,spalart1994one}.
+Comparison of \Cref{eq:sa} with the Navier-Stokes equations reveals some similarities. The left-hand side is comprised of the time rate of change of a quantity, in this case the modified eddy viscosity, and the advection of the stated quantity. The terms on the right-hand side represent the production, destruction, diffusion and anti-diffusion of $\sa$, respectively.
+
+Additional definitions are given by:
 \begin{align*}
-    f_{t2} &= c_{t3} \text{exp}(-c_{t4}\chi^2)\\
+    f_{t2} &= c_{t3} \text{exp}(-c_{t4}\chi^2), \quad
     \hat{S} &= \Omega + \frac{\sa}{\kappa^2 d^2}f_{v2}, \quad
         f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}, \quad
-        \Omega = \sqrt{2W_{ij}W_{ij}}, \quad
-        W_{ij} = \frac{1}{2}\left(\pdiff{u_i}{x_j} + \pdiff{u_j}{x_i}\right)\\
+        \Omega = \sqrt{2W_{ij}W_{ij}}, \\
+        W_{ij} = \frac{1}{2}\left(\pdiff{u_i}{x_j} + \pdiff{u_j}{x_i}\right), \quad
     f_{w} &= g \left[
         \frac{1 + c_{w3}^6}{g^6 + c_{w3}^6}
-    \right]^{1/6}, \quad
+    \right]^{1/6}, \\
         g = r + c_{w2}(r^6 - r), \quad
         r = \text{min}\left[ \frac{\sa}{\hat{S}\kappa^2d^2}, 10 \right].
 \end{align*}
+The non-dimensional function $f_w$ accelerates the decay of the destruction term in the outer region of the boundary layer~\cite{spalart1994one}, $\Omega$ is the magnitude of the vorticity, $\hat{S}$ is a modified vorticity term that maintains log-law behavior all the way to the wall and $f_{t2}$ is a term delaying transition from laminar to turbulent regimes~\cite{tmrsa}.
 
 The constants are:
 \begin{gather*}
@@ -446,9 +386,7 @@ The boundary conditions are:
     \item $\sa = 0$ at solid walls.
     \item $\sa = 3\nu_\infty$ to $5\nu_\infty$ in the far-field.
 \end{itemize}
-Comparison of \Cref{eq:sa} with the Navier-Stokes equations reveals some similarities. The left-hand side is comprised of the time rate of change of a quantity, in this case the modified eddy viscosity, and the advection of the stated quantity. The terms on the right-hand side represent the production, destruction, diffusion and anti-diffusion of $\sa$, respectively.
-
-There exists several variants of the model, which are enumerated in~\cite{tmrsa}. A common variant involves neglecting the $f_{t2}$ term. Based on studies in~\cite{rumsey2007apparent}, use of this form makes little difference in the solution at reasonably high Reynolds numbers, provided that the far-field $\sa$ value is large enough. Other variants involve changes to the production term to account for rotation and curvature effects~\cite{shur2000turbulence,dacles1995numerical,dacles1999numerical}. Some other variants slightly alter the model so as to prevent values of $\sa$ from being negative
+There exists several variants of the model, which are enumerated in~\cite{tmrsa}. A common variant involves neglecting the $f_{t2}$ term. Based on studies in~\cite{rumsey2007apparent}, use of this form makes little difference in the solution at reasonably high Reynolds numbers, provided that the far-field $\sa$ value is large enough. Other variants involve changes to the production term to account for rotation and curvature effects~\cite{shur2000turbulence,dacles1995numerical,dacles1999numerical}. Some other variants slightly alter the model so as to prevent values of $\sa$ from being negative, such as the negative SA model~\cite{allmaras2012modifications} which provides an alternative equation to be solved in regions of negative $\sa$. Finally, \cite{spalart2000strategies} presents a nonlinear model that does not rely on the traditional linear Bousinnesq relation and instead writes $\tau^T$ as a nonlinear function.
 
 It should be emphasized that this is a model, as opposed to a mathematical expression of a law like the Navier-Stokes equations. Most turbulence models involve the calculation of the wall distance $d$, the accuracy of which can have a significant impact on the solution.
 

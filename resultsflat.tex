@@ -36,12 +36,15 @@ All values are within 2\% of each other. Reasons for discrepancies are given bel
 \begin{table}
 \caption{Flat Plate (syn3D \& NX Flow): Convergence metrics on the medium grid.}
 \label{tab:flatcpu}
-\begin{tabular}{@{}l cccc@{}}
+\begin{tabular}{@{}l ccccc@{}}
 \toprule
-Solver & Iterations & Time taken (min) & Time per iteration (sec) & Residual reduction \\
+Solver & Processors & Iterations & Time taken & Time per iteration & Residual reduction \\
+       &            &            & (min)      & (sec)              &                    \\
 \midrule
-NX Flow (4 cores) & 205 & 34 & $\approx$ 10 & $10^{-10}$ \\
-syn3D (8 cores) & 400000 & 156 & $\approx$ 0.023 & $10^{-8}$
+% NX Flow (4 cores) & 205 & 34 & $\approx$ 10 & $10^{-10}$ \\
+% syn3D (8 cores) & 400000 & 156 & $\approx$ 0.023 & $10^{-8}$
+NX Flow & 4 & 205 & 34 & $\approx$ 10 & $10^{-10}$ \\
+syn3D & 8 & 400000 & 156 & $\approx$ 0.023 & $10^{-8}$
 \\
 \bottomrule
 \end{tabular}
@@ -92,13 +95,14 @@ syn3D (8 cores) & 400000 & 156 & $\approx$ 0.023 & $10^{-8}$
     \label{fig:nxflatcnvstudy}
 \end{figure}
 
-Several plots have been generated to compare the results between all solvers. Unless otherwise noted, all results were obtained with the finest grid. \Cref{fig:flatcf} compares the skin friction along the plate.
+Several plots have been generated to compare the results between all solvers. Unless otherwise noted, all results were obtained with the finest grid. \Cref{fig:flatcf} compares the skin friction along the plate, which is maximal at the leading edge and then gradually decreases. NX Flow and syn3D display slight over-prediction and under-prediction respectively. The skin friction coefficient is a measure of the velocity gradient at the wall.
 
-\Cref{fig:flatmutcontour} shows contour plots of the dimensionless eddy viscosity $\frac{\mu_t}{\mu_{\infty}}$ and \Cref{fig:flatmu} shows line plots of the dimensionless eddy viscosity. As expected, the eddy viscosity increases gradually as the wall distance increases, as turbulence effects are more significant in the log-law region, and then diminishes as it reaches the far-field region. Moreover, the eddy viscosity, initially close to zero, increases with $x$ due to production near the wall as well as advection.
+\Cref{fig:flatmutcontour} shows contour plots of the dimensionless eddy viscosity $\frac{\mu_t}{\mu_{\infty}}$ and \Cref{fig:flatmu} shows line plots of the dimensionless eddy viscosity. As expected, the eddy viscosity increases gradually as the wall distance increases, as turbulence effects are more significant in the log-law region, and then diminishes as it reaches the far-field region. This is in accordance with the law of the wall, which states that turbulent stresses are minimal in the viscous sublayer and maximal in the log-law layer. Moreover, the eddy viscosity, initially close to zero, increases with $x$ due to production near the wall as well as advection.
 
 \Cref{fig:flatu,fig:flatupyp} show profiles of the dimensionless velocity $u/u_\infty$ and $u^+$ respectively. The velocity profile shows a sharp gradient near the wall, typical of turbulent flows. Moreover, the height of the boundary layer, the region where velocity is reduced as compared to the far-field, grows with increasing $x$. It can also be seen that the $u^+$ profile agrees with the theory: $u^+$ follows the $u^+=y^+$ curve in the viscous sublayer and the log-law curve in the log-law region.
 
-Overall, there is excellent agreement between NX Flow and CFL3D and some level of discrepancy between syn3D and CFL3D. The source of discrepancy is easily seen in~\Cref{fig:flatmutmax}: the eddy viscosity jumps abruptly right at the leading edge for syn3D but not for the other two. The cause of this jump was investigated by the author as well as others working on the code, but a definite answer was unfortunately not found.
+Overall, there is excellent agreement between NX Flow and CFL3D and some level of discrepancy between syn3D and CFL3D. The source of discrepancy is easily seen in~\Cref{fig:flatmutmax}: the eddy viscosity jumps abruptly right at the leading edge for syn3D but not for the other two. It should be noted that the spike occurs at the interface between block boundaries, which could be the cause of this phenomenon. These blocks thus have different boundary conditions at their $y=0$ face. Moreover, the jump does not occur if the domain only includes the plate, i.e. starts at $x=0$.
+% The cause of this jump was investigated by the author as well as others working on the code, but a definite answer was unfortunately not found.
 \begin{figure}[ht!]
 \centering
 	\includegraphics[width=0.7\textwidth]{figs/flat/skin_friction.pdf}
@@ -176,7 +180,11 @@ Overall, there is excellent agreement between NX Flow and CFL3D and some level o
 \label{fig:flatupyp}
 \end{figure}
 
-\Cref{fig:flatforcestudy} shows the dependence of $C_D$ and $C_f$ on the grid spacing $h = 1/N^2$, where $N$ is the number of grid points. It can be seen that there is still significant differences in results between the second finest and finest grid for syn3D as compared to CFL3D and FUN3D -- the latter is a vertex-centered code also developed by NASA. \Cref{fig:synflatcnvstudy} shows the syn3D convergence of residuals for all five grids.  \Cref{fig:synflatcfstudy,fig:synflatprofilestudy} show the variation of skin friction coefficient along the plate and profiles of eddy viscosity and velocity with grid size respectively with syn3D and \Cref{fig:nxflatcfstudy,fig:nxflatprofilestudy} show the variation with NX Flow. These plots show that the solution field seems to converge to a unique solution, as opposed to oscillating back and forth between different values.
+\Cref{fig:flatforcestudy} shows the dependence of $C_D$ and $C_f$ on the grid spacing $h = 1/N^2$, where $N$ is the number of grid points. It can be seen that there is still significant differences in results between the second finest and finest grid for syn3D as compared to CFL3D and FUN3D -- the latter is a vertex-centered code also developed by NASA. Thus, syn3D may not have reached the asymptotic range of convergence. Moreover, the importance of a grid study can be seen from these plots: whereas results on the fine grid are mostly similar, they are quite different on the coarser grids, with some being over-predicted and others under-predicted compared to the asymptotic values.
+
+The skin friction coefficient obtained by NX Flow is closer to that of FUN3D run in incompressible mode, which is higher than the compressible value. This explains the over-prediction in the skin friction coefficient as well as drag.
+
+\Cref{fig:synflatcfstudy,fig:synflatprofilestudy} show the variation of skin friction coefficient along the plate and profiles of eddy viscosity and velocity with grid size respectively with syn3D and \Cref{fig:nxflatcfstudy,fig:nxflatprofilestudy} show the variation with NX Flow. These plots show that the solution field seems to converge to a unique solution, as opposed to oscillating back and forth between different values. As expected, solutions on coarser grids display increased dissipation; the discretization errors scale with the grid spacing and typically lead to increased diffusion. Moreover, the artificial dissipation parameters in syn3D were not tuned for each individual grid, and they lead to significantly increased dissipation on coarser grids.
 \begin{figure}[ht!]
 \centering
 \begin{subfigure}{.45\textwidth}
@@ -196,7 +204,7 @@ Overall, there is excellent agreement between NX Flow and CFL3D and some level o
 \begin{figure}[ht!]
 \centering
   \includegraphics[width=0.7\textwidth]{figs/flat/skin_friction_grid.pdf}
-  \caption{Flat Plate (yn3D): Coefficient of skin friction on various grids.}
+  \caption{Flat Plate (syn3D): Coefficient of skin friction on various grids.}
   \label{fig:synflatcfstudy}
 \end{figure}
 

@@ -5,10 +5,20 @@ This chapter concludes the work. The obtained results are discussed in~\Cref{sec
 \label{sec:conclusionresults}
 The results following the implementation of the Spalart-Allmaras turbulence model in NX Flow and syn3D were compared to established CFD codes as well as experimental data. The results can only be as accurate as the rest of the existing solver, specifically the implementation and discretization of Navier-Stokes equations, since the eddy viscosity obtained from the S-A model feeds into these equations but also relies on the solution of the flow variables.
 
-There exists many differences between syn3D and NX Flow: the former is cell-centered, structured and density-based and the latter is vertex-centered, unstructured and pressure-based. Nevertheless, both codes, when compared to experimental data or other, established, CFD software, showed decent agreement.
+There exists many differences between syn3D and NX Flow: the former is cell-centered, structured and density-based and the latter is vertex-centered, unstructured and pressure-based. For instance, the chosen temporal discretization was seen to significantly affect convergence, as discussed in the flat plat case. Moreover, even for cases which are essentially incompressible, results vary between incompressible and compressible simulations.
+Nevertheless, both codes, when compared to experimental data or other, established, CFD software, showed decent agreement. 
 
-Finally, it can be said that the implementation in both codes corresponds to the discretization, i.e. no programming errors have been made.
+Finally, it can be said that the implementation in both codes corresponds to the discretization, i.e. no programming errors have been made. This doesn't mean, however, that improvements cannot be made, either to the underlying solver or to the SA implementation itself. 
 
 \section{Future work}
 \label{sec:future}
-To further validate, several items are suggested. First, what seems to be a boundary condition issue in syn3D, which led to high peaks in the eddy viscosity for the TMR cases, which should be investigated. Second, a grid study should be performed on the NACA0012 and RAE2822 to see if better results can be obtained. Third, the effects of strong and weak boundary conditions for viscous walls in NX Flow should be compared. Finally, the high-lift configuration should be solved on a suitable grid with syn3D, along with a transition model.
+To further validate, several items are suggested. 
+First, what seems to be a boundary condition issue in syn3D, which led to high peaks in the eddy viscosity for the TMR cases, should be investigated. This may decrease the dependence on grid refinement. 
+
+Second, a grid study should be performed on the NACA0012 and RAE2822 to see if better results can be obtained. 
+
+Third, the effects of strong and weak boundary conditions for viscous walls in NX Flow should be compared. 
+
+Fourth, a far-field BC should be implemented into NX Flow, so as to be able to run external flow simulations on structured grids, which are popular for such flows. For best results, this BC should employ a vortex correction in order to reduce influence of the far-field condition on the solution and also reduce dependence on the extent of the computational grid~\cite{tmrvortex,thomas1986far}.
+
+Finally, the high-lift configuration should be solved on a suitable grid with syn3D, along with a transition model.

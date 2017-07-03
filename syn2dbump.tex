@@ -42,7 +42,9 @@ syn3D & 0.00610 & 0.00519  & 0.002835  \\
 
 \end{table}
 
-\Cref{tab:syn2dbump1} tabulates the drag coefficient, the lift coefficient $C_L$ as well as the contributors to the drag coefficient $C_{Dv}$ and $C_{Dp}$, which represent the contributions due to viscous forces and pressure forces respectively. \Cref{tab:syn2dbump2} tabulates the skin friction coefficient probed at various locations. \Cref{fig:syn2dbumpcnvstudy} shows the convergence for all grids. Reduction of the residual is quite slow for this particular problem, with the finest grid taking over 3 days on 64 processors to complete.
+\Cref{tab:syn2dbump1} tabulates the drag coefficient, the lift coefficient $C_L$ as well as the contributors to the drag coefficient $C_{Dv}$ and $C_{Dp}$, which represent the contributions due to viscous forces and pressure forces respectively. \Cref{tab:syn2dbump2} tabulates the skin friction coefficient probed at various locations. These tables show good agreement between CFL3D and syn3D.
+
+\Cref{fig:syn2dbumpcnvstudy} shows the convergence for all grids. Reduction of the residual is quite slow for this particular problem, with the finest grid taking over 3 days on 64 processors to complete. In addition, a plateau of the residual at approximately $2\times10^{-3}$ can be observed for the three coarsest grids, which is likely due to the interfaces between the symmetry planes and the solid wall. In fact, the maximum residual occurs at the field points with faces lying on that interface, which is also an interface between block boundaries.
 \begin{figure}[ht!]
 \centering
 \begin{subfigure}{.45\textwidth}
@@ -125,14 +127,15 @@ syn3D & 0.00610 & 0.00519  & 0.002835  \\
 \label{fig:syn2dbumpu}
 \end{figure}
 
-\Cref{fig:syn2dbumpcf} shows the $C_f$ distribution over the bump for the finest grid. The skin friction coefficient can be seen to start high, slowly decrease in the flat portion and then increase on the bump as it accelerates.
+\Cref{fig:syn2dbumpcf} compares the $C_f$ distribution over the bump for the finest grid. The skin friction coefficient can be seen to start high, slowly decrease in the flat portion as it did for the flat plate, and then increase on the bump as it accelerates. The value of $C_f$ is under-predicted syn3D until the peak of the bump, after which point it is over-predicted.
 
-\Cref{fig:syn2dbumpcp} shows the $C_p$ distribution. The trend in this plot is similar to the skin friction plot. The pressure decreases as the flow accelerates at the leading edge of the bump. The pressure then increases again once the peak is reached.
+\Cref{fig:syn2dbumpcp} shows the $C_p$ distribution. The trend in this plot is similar to the skin friction plot. The pressure decreases as the flow accelerates at the leading edge of the bump. The pressure then increases again once the peak is reached. The pressure coefficient is identical between syn3D and CFL3D, as is the drag force due to the pressure component $C_{Dp}$ (see~\Cref{tab:syn2dbump1}).
 
-\Cref{fig:syn2dbumpmutcontour} compares the contour of eddy viscosity over the bump and \Cref{fig:syn2dbumpmut} compares the eddy viscosity through line plots. Similar to the flat plate, $\mu_t$ increases with $x$. In, \Cref{fig:syn2dbumpmutprof}, it can again be seen that the eddy viscosity increases with $y$ until it reaches a maximum value and begins to decrease again as it reaches the far-field region.
-These plots show decent agreement between CFL3D and syn3D and the spike in eddy viscosity can be seen at the leading edge of the solid wall in~\Cref{fig:syn2dbumpmaxmut}.
+\Cref{fig:syn2dbumpmutcontour} compares the contour of eddy viscosity over the bump. Both contour plots show similar trends. However, values of $\mu_t$ in the downstream region are slightly elevated for syn3D.
 
-\Cref{fig:syn2dbumpu} compares the velocity profile. A sharp velocity gradient near the wall is observed at both locations, although the height of the boundary layer is greater as $x$ increases.
+\Cref{fig:syn2dbumpmut} compares the eddy viscosity through line plots. Similar to the flat plate, $\mu_t$ increases with $x$. Once again, syn3D displays a small peak in eddy viscosity at the leading edge ($x=0.0$). The difference of the maximum $\mu_t$ value between syn3D and CFL3D is, as mentioned previously, greater in the downstream region. In, \Cref{fig:syn2dbumpmutprof}, it can again be seen that the eddy viscosity increases with $y$ until it reaches a maximum value and begins to decrease again as it reaches the far-field region. In the region of increasing $mu_t$ ($y < 0.054$), syn3D and CFL3D show very similar results. In the decreasing region, however, syn3D displays a greater gradient and under-predicts the distance needed for $\mu_t$ to return to its free-stream value.
+
+\Cref{fig:syn2dbumpu} compares the velocity profile. A sharp velocity gradient near the wall is observed at both locations, although the height of the boundary layer is greater as $x$ increases. Profiles are identical between the two solvers.
 \begin{figure}[ht!]
 \centering
   \includegraphics[width=0.7\textwidth]{figs/2dbump/CfGridStudy.pdf}
@@ -212,4 +215,8 @@ These plots show decent agreement between CFL3D and syn3D and the spike in eddy 
 \label{fig:syn2dbumpcflocstudy}
 \end{figure}
 
-\Cref{fig:syn2dbumpcfstudy,fig:syn2dbumpcpstudy} show $C_f$ and $C_p$ distributions along the bump for all grids and \Cref{fig:syn2dbumpmutstudy} compares the eddy viscosity distribution between grids. \Cref{fig:syn2dbumpforcestudy,fig:syn2dbumpcflocstudy} show the convergence of force coefficients and skin friction for various grid sizes, compared with results from CFL3D and FUN3D. Again, it can be seen that there is much more dependence on grid size for syn3D as compared to the NASA solvers, although most values are very similar on the finest grid.
+\Cref{fig:syn2dbumpcfstudy,fig:syn2dbumpcpstudy} show $C_f$ and $C_p$ distributions along the bump for all grids. Both plots show over-dissipated results for the coarser grids, which is expected, as discussed for the flat plate case. The difference of $C_f$ between the coarsest and finest grid is much greater than that of $C_p$. In other words, pressure seems to be less senstivive to mesh refinement than the skin friction. By the same token, while there is seemingly no difference of $C_p$ between the second finest and finest grids, indicating that grid convergence is achieved, there remains a noticeable discrepancy for $C_f$, which indicates the opposite about grid convergence.
+
+\Cref{fig:syn2dbumpmutstudy} compares the eddy viscosity distribution between grids. The peak at the leading edge is significantly more pronounced for the coarser grids, and even slightly extends upstream. This results in over-predicted values for most, but not all, of the length of the wall; $\mu_t$ is under-predicted after $x\approx1.0$. Again, this is due to increased dissipation in the coarser grids, where the gradients are not as sharp as they should be.
+
+\Cref{fig:syn2dbumpforcestudy,fig:syn2dbumpcflocstudy} show the convergence of force coefficients and skin friction for various grid sizes, compared with results from CFL3D and FUN3D. Again, it can be seen that there is much more dependence on grid size for syn3D as compared to the NASA solvers, although most values are very similar on the finest grid. The pressure contribution to drag, seems to have reached the asymptotic range of convergence, although the same cannot be said of the viscous contribution. Without a doubt, this increased dependence on grid size is due to the peak in eddy viscosity at the leading edge, which is an interface between block boundaries.
