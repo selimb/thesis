@@ -32,7 +32,9 @@ Flow over the RAE 2822 airfoil is discussed in this section. Experimental data i
 %
 \Cref{fig:raecp3} compares the pressure coefficient over the airfoil between NX Flow, syn3D and the experimental data. \Cref{fig:raecf3} compares the skin friction coefficient only for syn3D and NX Flow, since no experimental data is available. It can be seen that syn3D over-predicts the suction on the upper surface at the leading edge, whereas NX Flow under-predicts it. The skin friction coefficient distribution is different between syn3D and NX Flow, but similar trends can be observed.
 
-\Cref{tab:raecase3} tabulates the lift and drag coefficients. Syn3D slightly over-predicts both the lift and drag, whereas NX Flow under-predicts the lift and significantly over-predicts drag, as it did for the NACA0012 case.
+\Cref{tab:raecase3} tabulates the lift and drag coefficients. Syn3D slightly over-predicts both the lift and drag. It was shown for the TMR cases that syn3D is quite sensitive to grid density. Since the maximum $y^+$ is around 3, compared to 0.95 for the the coarsest flat plate grid, it is possible that the grid is not sufficiently refined.
+
+On the other hand, NX Flow under-predicts the lift and significantly over-predicts drag, as it did for the NACA0012 case. Since a mesh very similar to that of the NACA0012 is used for the RAE, the errors may be attributed to the wall boundary condition, the far-field BC and the size of the grid. Additionally, NX Flow has had limited testing and benchmarking on compressible problems, and it could be that the implementation requires improvement. Finally, the code was run with a first-order advection scheme due to its robustness; a second-order scheme would be more accurate, albeit more difficult to converge as well as more computationally expensive.
 \begin{table}
     \centering
     \caption{RAE 2822 case 3 (syn3D \& NX Flow): Comparison of drag and lift coefficients with experimental data.}

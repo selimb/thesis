@@ -78,7 +78,7 @@ The total shear stress is the sum of viscous and Reynolds stresses. The Reynolds
 where $d$ is the distance to the nearest wall and $u_\tau$ is the friction velocity defined as:
 \begin{equation*}
     u_\tau = \sqrt{\frac{\tau_w}\rho}.
-\end{equation*}.
+\end{equation*}
 It is possible to identify the following layers in the near-wall flow based on the $y^+$ value:
 \begin{description}
     \item[Viscous sublayer] ($y^+ < 5$): Viscous stresses dominate
@@ -104,9 +104,11 @@ Solving the RANS equations requires evaluation of the eddy viscosity, the quanti
 The SA equation depends on the distance to the nearest wall, which can be calculated in various ways, as shown in~\Cref{sec:walldist}. While the Navier-Stokes equations do not depend on such a quantity, it is important to accurately compute this distance in order to correctly predict the behavior of turbulent flows using the Spalart-Allmaras model. In fact, this value is required by most turbulence models, including the two-equation models mentioned above.
 
 \section{Thesis overview}
-The governing equations and an introduction to turbulence modelling are presented in~\Cref{chap:governing}. Numerical methods and their implementation in both solvers are given in~\Cref{chap:num}, which shows the differences in implementation between both codes. 
+The governing equations and an introduction to turbulence modelling are presented in~\Cref{chap:governing}. Numerical methods and their implementation in both solvers are given in~\Cref{chap:num}, which shows the differences in implementation between both codes.
 
-Finally, results are presented in~\Cref{chap:results}. The goal is to demonstrate that the implementation in both codes is correct and also to highlight the differences in results that arise due to the different implementations. The results are compared against either experimental data or other established CFD codes. 
+Results are presented in~\Cref{chap:results} and compared against either experimental data or other established CFD codes. The goal is to demonstrate that the implementation in both codes is correct and also to highlight the differences in results that arise due to the different implementations. Special importance is given to the boundary conditions, since they can significantly affect the solution. Specifically, this work aims to determine if the implemented boundary conditions are suitable for external flows and to assess their impact on grid sensitivity.
 
-For some cases, a grid study is performed, in which the same problem is solved on successively finer computational grids. Such a study aims to determine whether grid is sufficiently refined such that the solution lies in the asymptotic range of convergence~\cite{roache1986editorial}, which is obtained when the grid size no longer significantly affects the result.
+For some cases, a grid study is performed, in which the same problem is solved on successively finer computational grids. Such a study aims to determine whether grid is sufficiently refined such that the solution lies in the asymptotic range of convergence~\cite{roache1986editorial}, which is obtained when the grid size no longer significantly affects the result. This type of study will be used to assess the sensitivity of the solution on grid density for both codes. The effects of grid size on the convergence of the residual will also be investigated.
+
+Problems to be solved involve both compressible and incompressible cases; the accuracy of each solver for these types of flow will be discussed.
 

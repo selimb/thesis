@@ -47,9 +47,9 @@ where $mu$ is the dynamic viscosity, a material property, and the strain-rate te
 \end{equation*}
 The specific energy is defined as:
 \begin{equation*}
-    E = i + \frac{1}{2}(u^2 + v^2 + w^2),
+    E = \hat{u}  + \frac{1}{2}(u^2 + v^2 + w^2),
 \end{equation*}
-where $i$ is the internal thermal energy.
+where $\hat{u}$ is the internal thermal energy.
 The specific total enthalpy and specific energy are related by the following:
 \begin{equation*}
     H = E + \frac{p}{\rho}.
@@ -252,7 +252,7 @@ Moreover, the turbulent kinetic energy $K$ is defined as the sum of the normal s
     \right]
 \end{equation*}
 
-Because the Reynolds stress tensor is symmetric, this adds a total of six unknowns to the three-dimensional momentum equations, leading to the \textit{turbulence closure problem}. In other words, the Favre-averaged, as well as Reynolds-averaged, conservation laws cannot be solved unless the Reynolds stresses are determined. 
+Because the Reynolds stress tensor is symmetric, this adds a total of six unknowns to the three-dimensional momentum equations, leading to the \textit{turbulence closure problem}. In other words, the Favre-averaged, as well as Reynolds-averaged, conservation laws cannot be solved unless the Reynolds stresses are determined.
 % A common solution to this problem is given in~\Cref{sec:bouss}.
 %
 \subsubsection{Conservation of energy}
@@ -288,7 +288,7 @@ Averaging of the conservation of energy equation adds another three unknowns to 
 The temporal averaging process detailed in the previous subsection introduces new terms to the system of equations. The challenge, which
 has yet to be completely overcome even today, is to correctly
 \textit{model} the additional turbulent terms $\tau^T$ and
-$\ravg{\rho \vec{u}'' h''}$. 
+$\ravg{\rho \vec{u}'' h''}$.
 
 In 1877, Boussinesq observed that the momentum transfer in a turbulent flow is dominated by the mixing caused by large energetic turbulent eddies~\cite{blazek2015computational}. The Boussinesq approximation then states that the turbulent stress is proportional to the mean strain rate, where the proportionality factor is the so-called eddy viscosity $\mu_T$. This can be written as:
 \begin{equation}
@@ -361,18 +361,18 @@ where $d$ is the distance to the nearest solid wall. This is the standard form o
 Comparison of \Cref{eq:sa} with the Navier-Stokes equations reveals some similarities. The left-hand side is comprised of the time rate of change of a quantity, in this case the modified eddy viscosity, and the advection of the stated quantity. The terms on the right-hand side represent the production, destruction, diffusion and anti-diffusion of $\sa$, respectively.
 
 Additional definitions are given by:
-\begin{align*}
-    f_{t2} &= c_{t3} \text{exp}(-c_{t4}\chi^2), \quad
-    \hat{S} &= \Omega + \frac{\sa}{\kappa^2 d^2}f_{v2}, \quad
+\begin{gather*}
+    f_{t2}  = c_{t3} \text{exp}(-c_{t4}\chi^2), \quad
+    \hat{S}  = \Omega + \frac{\sa}{\kappa^2 d^2}f_{v2}, \quad
         f_{v2} = 1 - \frac{\chi}{1 + \chi f_{v1}}, \quad
         \Omega = \sqrt{2W_{ij}W_{ij}}, \\
         W_{ij} = \frac{1}{2}\left(\pdiff{u_i}{x_j} + \pdiff{u_j}{x_i}\right), \quad
-    f_{w} &= g \left[
+    f_{w}  = g \left[
         \frac{1 + c_{w3}^6}{g^6 + c_{w3}^6}
     \right]^{1/6}, \\
         g = r + c_{w2}(r^6 - r), \quad
         r = \text{min}\left[ \frac{\sa}{\hat{S}\kappa^2d^2}, 10 \right].
-\end{align*}
+\end{gather*}
 The non-dimensional function $f_w$ accelerates the decay of the destruction term in the outer region of the boundary layer~\cite{spalart1994one}, $\Omega$ is the magnitude of the vorticity, $\hat{S}$ is a modified vorticity term that maintains log-law behavior all the way to the wall and $f_{t2}$ is a term delaying transition from laminar to turbulent regimes~\cite{tmrsa}.
 
 The constants are:

@@ -605,7 +605,7 @@ where the flow direction is determined by the sign of $\vec{u}\cdot\vec{n}$ at t
 \label{sec:synwalldist}
 Syn3D can calculate wall distances either through the brute force approach or the Poisson approach detailed in~\Cref{sec:walldist}. With the brute force approach, distances between each cell center and the nearest face center is calculated. As mentioned in~\Cref{sec:walldist}, this can be a source of error. However, structured meshes are typically constructed in such a way that grid lines are orthogonal to solid wall boundaries, in which case the error vanishes.
 
-The Poisson equation (\Cref{eq:poissondist}) is solved using the Galerkin method, which belongs to the class of finite element techniques. A detailed discussion on using the Galerkin method for solving PDEs can be found in~\cite{reddy2006introduction} and only an overview is given here.
+The Poisson equation (\Cref{eq:poissondist}) is solved using the Galerkin method, which belongs to the class of finite element techniques. A detailed discussion on using the Galerkin method for solving PDEs can be found in~\cite{reddy1993introduction} and only an overview is given here.
 
 The first step is to rewrite the Poisson equation in the following weak form:
 \begin{equation*}
