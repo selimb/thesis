@@ -47,9 +47,9 @@ where $mu$ is the dynamic viscosity, a material property, and the strain-rate te
 \end{equation*}
 The specific energy is defined as:
 \begin{equation*}
-    E = \hat{u}  + \frac{1}{2}(u^2 + v^2 + w^2),
+    E = \tilde{u}  + \frac{1}{2}(u^2 + v^2 + w^2),
 \end{equation*}
-where $\hat{u}$ is the internal thermal energy.
+where $\tilde{u}$ is the internal thermal energy.
 The specific total enthalpy and specific energy are related by the following:
 \begin{equation*}
     H = E + \frac{p}{\rho}.
@@ -58,7 +58,7 @@ The specific total enthalpy and specific energy are related by the following:
 \Cref{eq:mass,eq:mom,eq:energy} form an under-determined system of five equations with seven unknowns: density, three components of velocity, pressure, temperature and specific energy. Equations of state are necessary to close the system. If the fluid is assumed to be a perfect gas, which is the case in most aerodynamic problems and all problems in this work, the following equations can be used:
 \begin{align}
     p &= \rho R T \label{eq:state1}\\
-    i &= c_v T \label{eq:state2},
+    \tilde{u} &= c_v T \label{eq:state2},
 \end{align}
 where $R$ is the specific gas constant and $c_v$ is the specific heat at constant volume -- both are material properties.
 % The conservation laws are expressed mathematically in the following section. It should be noted that the equations are based on the assumption that the fluid is a continuum, and therefore can be treated as a continuous substance, as opposed to discrete particles. Consequently, a mathematical abstraction called a \textit{control volume} is employed, which is the smallest possible element of fluid whose macroscopic properties, such as density and pressure, are not influenced by the individual molecules it is realistically comprised of.
