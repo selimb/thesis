@@ -113,7 +113,7 @@ It should be noted that boundaries of the domain require special treatment, sinc
 \label{sec:pbased}
 The main difference between a density-based and a pressure-based solver is the dependent variable in the mass equation, which is density in the former and pressure in the latter. Because a large portion of users of NX Flow want to simulate flows involving liquids, which have a constant density, the developers of NX Flow chose the pressure-based approach. In the case of ideal gases, the density is updated using the ideal gas law at each iteration.
 
-NX Flow employs the collocated variables approach, i.e. pressure and velocity are stored at the same locations, proposed by Rhie and Chow~\cite{rhie1983numerical} in order to avoid pressure checkerboarding.
+NX Flow employs the collocated variables approach, i.e. pressure and velocity are stored at the same locations, proposed by Rhie and Chow~\cite{rhie1983numerical} in order to avoid pressure checker-boarding.
 
 \subsection{Discretization of the governing equations}
 \label{sec:nxnum}

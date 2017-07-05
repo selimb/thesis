@@ -270,7 +270,7 @@ The above equation results in a three-dimensional vector with each component bel
 %
 In addition to the evaluation of quantities at each integration point, computation of viscous fluxes also requires computation of derivative terms, which are not available either at the field points or integration points. This is done using two levels of approximation: interpolation and differentiation.
 
-The value of the flux on a given face is approximated by the arithmethic average of the flux quantities at the four vertices sharing this face. For instance, let $\vec{F}_v$ be the viscous flux, then its value on the $i+\frac{1}{2}$ face is approximated as:
+The value of the flux on a given face is approximated by the arithmetic average of the flux quantities at the four vertices sharing this face. For instance, let $\vec{F}_v$ be the viscous flux, then its value on the $i+\frac{1}{2}$ face is approximated as:
 \begin{equation*}
     \vec{F}_{v_{i+\half,j,k}} = \frac{1}{4} \left(
         \vec{F}_{v_{i+\half,j+\half,k+\half}} +
@@ -288,7 +288,7 @@ The value of the flux on a given face is approximated by the arithmethic average
     \label{fig:synaux}
 \end{figure}
 
-An auxiliary control volume is formed at each vertex by joining the centroids of all eight elements that share that vertex. This is illustrated in~\Cref{fig:synaux} for the two-dimensional case. For the sake of conciseness, let the viscous flux $\vec{F}_v$ be of the form $\Gamma \nabla \phi$ -- even though the viscous term in the momentum and energy equations contain more derivatives, they are all calculated in the same manner. The diffusion coefficient value $\Gamma$ at a vertex is approximated by an arithmethic average of the values at field points, which form the vertices of the auxiliary control volume. This can mathematically be written for the vertex at $i+\half,j+\half,k+\half$:
+An auxiliary control volume is formed at each vertex by joining the centroids of all eight elements that share that vertex. This is illustrated in~\Cref{fig:synaux} for the two-dimensional case. For the sake of conciseness, let the viscous flux $\vec{F}_v$ be of the form $\Gamma \nabla \phi$ -- even though the viscous term in the momentum and energy equations contain more derivatives, they are all calculated in the same manner. The diffusion coefficient value $\Gamma$ at a vertex is approximated by an arithmetic average of the values at field points, which form the vertices of the auxiliary control volume. This can mathematically be written for the vertex at $i+\half,j+\half,k+\half$:
 \begin{align*}
     \Gamma_{i+\half,j+\half,k+\half} = \frac{1}{8} (
         \Gamma_{i,j,k} + \Gamma_{i+1,j,k} + \Gamma_{i,j+1,k} + \Gamma_{i+1,j+1,k}&
@@ -399,13 +399,13 @@ It can be seen that solving the Favre-averaged fluid flow equations requires tha
 \begin{enumerate}
     \item Solve the turbulence equations using the latest solution field.
     \item Update the eddy viscosity and modified eddy viscosity $\sa$.
-    \item Solve the fluid flow equations using the same solution field as well as the updated viscosities.
+    \item Solve the fluid flow equations using the same solution field as well as the updated viscosity.
     \item Update the solution field.
 \end{enumerate}
 This type of procedure is commonly referred to as a segregated solve.
 %
 \subsubsection{Discretization of production and destruction terms}
-The production and destruction terms do not involve derivatives other than the vorticity $\Omega$, which itself requires computation of velocity gradients. The velocity gradients are calculated at the vertices using~\Cref{eq:velgradvertex}. The vorticity magnitude is then evaluated at the vertices and interpolated to the hexahedron centroid through an arithmethic average of all eight vertices of the hexahedron. The remaining computations all rely on readily available quantities stored at the field point of interest.
+The production and destruction terms do not involve derivatives other than the vorticity $\Omega$, which itself requires computation of velocity gradients. The velocity gradients are calculated at the vertices using~\Cref{eq:velgradvertex}. The vorticity magnitude is then evaluated at the vertices and interpolated to the hexahedron centroid through an arithmetic average of all eight vertices of the hexahedron. The remaining computations all rely on readily available quantities stored at the field point of interest.
 %
 \subsubsection{Discretization of advection term}
 The advection term involves the gradient of the modified eddy viscosity, which can be expressed in curvilinear coordinates as:
@@ -442,7 +442,7 @@ where
     q_{\xi_k} = u\pdiff{\xi_k}{x} + v\pdiff{\xi_k}{y} + w\pdiff{\xi_k}{z}.
 \end{equation*}
 
-Each term in the summation, which can be seen as the convective flux in each curvilinear direction, is discretized using a first-order upwinding scheme. For instance, the first term on the right-hand side of~\Cref{eq:saadvfd} is approximated as:
+Each term in the summation, which can be seen as the convective flux in each curvilinear direction, is discretized using a first-order upwind scheme. For instance, the first term on the right-hand side of~\Cref{eq:saadvfd} is approximated as:
 \begin{equation*}
     \pdiff{\sa}{\xi}q_\xi = q_{\xi_{i,j,k}}^+ (\sa_{i,j,k}- \sa_{i-1,j,k})
         + q_{\xi_{i,j,k}}^- ( \sa_{i+1,j,k} - \sa_{i,j,k}),
@@ -530,7 +530,7 @@ A flux-like discretization is then used to approximate the outer derivative with
         \right)_{i,j,k-\half}
     \right].
 \end{align*}
-Metrics and the diffusion coefficient at the interfaces are obtained using the usual arithmethic average of the two cells that share the interface and the derivatives are obtained using centered differences. For example, the derivative $\partial \sa/\partial \xi$ at $i + \half$ is written as:
+Metrics and the diffusion coefficient at the interfaces are obtained using the usual arithmetic average of the two cells that share the interface and the derivatives are obtained using centered differences. For example, the derivative $\partial \sa/\partial \xi$ at $i + \half$ is written as:
 \begin{equation*}
     \left(\pdiff{\sa}{\xi}\right)_{i+\half,j,k} =
     \sa_{i+1,j,k} - \sa_{i,j,k}.
@@ -584,7 +584,7 @@ The time derivative is discretized using the backward Euler approach mentioned i
         \frac{1}{\Delta t^n} + \pdiff{R^n}{\sa}
     \right] \Delta \sa^n = -R^n.
 \end{equation*}
-Due to the spatial discretization previously described, the residual at each point $(i,j,k)$ depends on values of $\sa$ at $(i,j,k)$ as well as at the following six neighboring field points: $(i+1,j,k)$, $(i-1,j,k)$, $(i,j+1,k)$, $(i,j-1,k)$, $(i,j,k+1)$ and $(i,j,k-1)$. Consequently, the flux Jacobian, $\partial R^n/\partial \sa$ is a very sparse matrix with at most seven entries on each row, including the diagonal. This system can be solved using the Alternating Direction Implicit (ADI) technique detailed in~\cite{blazek2015computational}, which factorizes the implicit operator into three factors. Each factor contains the linearisation for one particular curvilinear direction in the computational space. The matrix for each factor is a tridiagonal matrix, which can be inverted directly at a low computational cost using tridiagonal matrix algorithm, also known as the Thomas algorithm~\cite{thomas1949elliptic}.
+Due to the spatial discretization previously described, the residual at each point $(i,j,k)$ depends on values of $\sa$ at $(i,j,k)$ as well as at the following six neighboring field points: $(i+1,j,k)$, $(i-1,j,k)$, $(i,j+1,k)$, $(i,j-1,k)$, $(i,j,k+1)$ and $(i,j,k-1)$. Consequently, the flux Jacobian, $\partial R^n/\partial \sa$ is a very sparse matrix with at most seven entries on each row, including the diagonal. This system can be solved using the Alternating Direction Implicit (ADI) technique detailed in~\cite{blazek2015computational}, which factorizes the implicit operator into three factors. Each factor contains the linearisation for one particular curvilinear direction in the computational space. The matrix for each factor is a tri-diagonal matrix, which can be inverted directly at a low computational cost using tri-diagonal matrix algorithm, also known as the Thomas algorithm~\cite{thomas1949elliptic}.
 %
 \subsubsection{Boundary conditions}
 %
@@ -592,11 +592,11 @@ Implementation of boundary conditions for the turbulence model also benefits fro
 \begin{equation*}
     \sa_1 = -\sa_2,
 \end{equation*}
-which will result in an arithmethic average of zero at the interface.
+which will result in an arithmetic average of zero at the interface.
 
 Symmetry planes are implemented in exactly the same way as for the fluid flow equations, and far-field boundary conditions are implemented as follows:
 \begin{align*}
-    \sa_1 &= \sa_\infty \quad\text{ingoing flow}\\
+    \sa_1 &= \sa_\infty \quad\text{in-going flow}\\
     \sa_1 &= \sa_2 \quad \text{outgoing flow},
 \end{align*}
 where the flow direction is determined by the sign of $\vec{u}\cdot\vec{n}$ at the boundary.
